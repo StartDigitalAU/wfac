@@ -24,7 +24,7 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: 27.54.133.107
-          username: thestart
+          username: thestart@wfac.org.au
           password: ${{ secrets.DEV_FTP_PASS }}
           server-dir: public_html/staging/ # Make sure it ends in a trailing slash.
           # protocol: ftps # Required for some hosts.
