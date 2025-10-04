@@ -1,4 +1,6 @@
+
 <?php
+define('FORCE_SSL_ADMIN', false);
 
 /**
  * The base configuration for WordPress

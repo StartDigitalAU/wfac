@@ -1,12 +1,52 @@
 .button,
 .is-button {
-	@apply text-base border rounded-full py-2 px-6 flex items-center gap-4 w-fit duration-150;
+	@apply text-lg rounded-full font-heading py-1 flex items-center gap-2 w-fit duration-500 transition-all ease-in-out delay-150 text-wfac-cream relative;
+
+	.button__bg {
+		@apply absolute top-0 left-0 w-0 aspect-square rounded-full bg-wfac-cream pointer-events-none;
+	}
+
+	.button__circle {
+		@apply h-0 aspect-square rounded-full absolute top-0 left-0 bg-wfac-cream pointer-events-none;
+	}
 
 	&:hover {
-		@apply bg-white text-black;
+		@apply px-6;
 	}
 
 	&:active {
 		@apply scale-95 duration-150;
+	}
+
+	&.dark-red {
+		@apply text-wfac-dark-red;
+
+		.button__bg,
+		.button__circle {
+			@apply bg-wfac-dark-red;
+		}
+
+		&:hover {
+			span,
+			svg {
+				@apply text-wfac-cream;
+			}
+		}
+	}
+
+	&.accent-red {
+		@apply text-wfac-accent-red;
+
+		.button__bg,
+		.button__circle {
+			@apply bg-wfac-accent-red;
+		}
+
+		&:hover {
+			span,
+			svg {
+				@apply text-wfac-dark-red;
+			}
+		}
 	}
 }

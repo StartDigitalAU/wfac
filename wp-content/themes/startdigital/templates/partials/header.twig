@@ -1,12 +1,12 @@
-<header class="fixed top-0 bg-yellow-100 z-50 w-full max-sm:py-2 max-lg:py-3 duration-300">
-	<div data-navigation class="container relative w-full flex items-center justify-between">
-		<a href="{{ site.url }}" rel="home">{% include 'icons/logo.twig' %}</a>
-		<button data-toggle-menu class="lg:hidden ml-auto">{{ include('templates/icons/hamburger.twig') }}</button>
-		{% if menu %}
-			<nav class="navigation">
-				{% include 'partials/menu/desktop-menu.twig' %}
-				{% include 'partials/menu/mobile-menu.twig' %}
-			</nav>
-		{% endif %}
+<header	class="fixed top-0 z-50 w-full py-4">
+	<div	data-navigation	class="container  relative">
+		<div	class="bg-wfac-white w-full flex items-center justify-between rounded-full p-2 px-6">
+			<a	href="{{ site.url }}"	rel="home">
+				{% include 'icons/logo.twig' with { class: 'h-9' } %}
+			</a>
+			<button	data-toggle-menu	class="lg:hidden ml-auto">
+				{{ include('templates/icons/hamburger.twig') }}
+			</button>
+		</div>
 	</div>
 </header>
