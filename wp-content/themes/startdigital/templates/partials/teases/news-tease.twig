@@ -1,0 +1,21 @@
+<article class="post-tease shop-tease relative flex flex-col w-full gap-4 group text-wfac-dark-red {{ class }}">
+    <a href="{{ post.shop_item.link }}" class="absolute inset-0 h-full w-full z-20"></a>
+    <div class="image-container relative w-full h-[500px] overflow-hidden rounded-md !pointer-events-none">
+        <img src="{{ get_image(post.hero_image).src }}" alt="{{ post.hero_image.alt }}" class="absolute inset-0 w-full h-full object-cover" />
+    </div>
+    <div class="flex flex-col gap-4">
+        <div class="flex flex-row items-center gap-2 text-xs opacity-60 uppercase">
+            <time datetime="{{ post.date|date('c') }}">
+                {{ post.date|date('F j, Y') }}
+            </time>
+            <div class="size-1 rounded-full bg-wfac-dark-red"></div>
+            <span>
+                {{ post.reading_length ?: 5 }}
+                Min Read
+            </span>
+        </div>
+        <h5 class="is-h5 duration-[400ms] ease-in-out">
+            {{ post.title }}
+        </h5>
+    </div>
+</article>

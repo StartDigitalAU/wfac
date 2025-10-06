@@ -25,7 +25,7 @@ class NoiseMaterial {
 			uVideoTexture: { value: this.videoTexture },
 			uVideoResolution: { value: new THREE.Vector2(1920, 1080) },
 			uSvgTexture: { value: this.svgTexture },
-			uSvgBounds: { value: new THREE.Vector4(0, 0, 1, 1) },
+			uSvgBounds: { value: new THREE.Vector4(0, 0, 0, 0) },
 		}
 
 		this.material = this.createMaterial()
@@ -97,12 +97,12 @@ class NoiseMaterial {
 			this.uniforms.uSvgTexture.value = this.svgTexture
 
 			// Store the actual UV bounds of where the SVG was drawn
-			this.uniforms.uSvgBounds.value.set(
-				offsetX / canvas.width,
-				offsetY / canvas.height,
-				drawWidth / canvas.width,
-				drawHeight / canvas.height
-			)
+			// this.uniforms.uSvgBounds.value.set(
+			// 	offsetX / canvas.width,
+			// 	offsetY / canvas.height,
+			// 	drawWidth / canvas.width,
+			// 	drawHeight / canvas.height
+			// )
 
 			URL.revokeObjectURL(url)
 		}

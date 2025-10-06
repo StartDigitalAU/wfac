@@ -60,9 +60,9 @@
                 {
                     "key": "field_68d63534360d0",
                     "label": "Bottom Left",
-                    "name": "bottom_left",
+                    "name": "",
                     "aria-label": "",
-                    "type": "text",
+                    "type": "message",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -71,12 +71,9 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
-                    "maxlength": "",
-                    "allow_in_bindings": 0,
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": ""
+                    "message": "The open\/closed status updates automatically based on the opening hours configured in the site settings",
+                    "new_lines": "wpautop",
+                    "esc_html": 0
                 },
                 {
                     "key": "field_68d63545360d1",
@@ -656,7 +653,7 @@
                     "min": 0,
                     "max": 0,
                     "collapsed": "",
-                    "button_label": "Add Row",
+                    "button_label": "Add Shop Item",
                     "rows_per_page": 20,
                     "sub_fields": [
                         {
@@ -687,11 +684,11 @@
                             "parent_repeater": "field_68dcce650c627"
                         },
                         {
-                            "key": "field_68dcd01e0c629",
-                            "label": "Title",
-                            "name": "title",
+                            "key": "field_68e31f6b07480",
+                            "label": "Link",
+                            "name": "link",
                             "aria-label": "",
-                            "type": "text",
+                            "type": "link",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
@@ -700,12 +697,8 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "default_value": "",
-                            "maxlength": "",
+                            "return_format": "array",
                             "allow_in_bindings": 0,
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
                             "parent_repeater": "field_68dcce650c627"
                         },
                         {
@@ -753,6 +746,81 @@
                     ]
                 }
             ]
+        },
+        {
+            "key": "field_68e3389b3a982",
+            "label": "Stories & Articles",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_68e338ac3a983",
+            "label": "Stories",
+            "name": "stories",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_68e338ba3a984",
+                    "label": "Heading",
+                    "name": "heading",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "allow_in_bindings": 0,
+                    "tabs": "all",
+                    "toolbar": "full",
+                    "media_upload": 1,
+                    "delay": 0
+                },
+                {
+                    "key": "field_68e338c43a985",
+                    "label": "Latest Stories",
+                    "name": "",
+                    "aria-label": "",
+                    "type": "message",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "Recent stories and articles are dynamically sourced from the latest news posts",
+                    "new_lines": "wpautop",
+                    "esc_html": 0
+                }
+            ]
         }
     ],
     "location": [
@@ -775,5 +843,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1759302078
+    "modified": 1759730135
 }

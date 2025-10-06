@@ -6,6 +6,7 @@ import initSmoothScrolling from './utils/smooth-scroll'
 import initMorphSVG from './components/svg-morph'
 import initMouseFollowers from './utils/mouse-follower'
 import initButtonAnimation from './components/button'
+import initSliders from './components/sliders/sliders'
 
 document.addEventListener('DOMContentLoaded', () => {
 	initSmoothScrolling()
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initHeaderOnScroll()
 	initButtonAnimation()
 	initMouseFollowers()
+	initSliders()
 	initThree()
 	initMorphSVG()
 })

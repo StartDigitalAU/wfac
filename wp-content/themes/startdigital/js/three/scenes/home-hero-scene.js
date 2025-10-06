@@ -40,12 +40,13 @@ class HomeHeroScene extends BaseScene {
 			this.heroContainer,
 			this.container,
 			{
+				borderRadius: 0,
 				material: this.heroMaterial.getMaterial(),
 			}
 		)
 
 		this.updateMaterialResolution()
-		this.updateSvgBounds()
+		// this.updateSvgBounds()
 	}
 
 	updateMaterialResolution() {

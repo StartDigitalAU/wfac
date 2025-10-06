@@ -1,14 +1,32 @@
-<footer class="bg-black text-white">
-	<div class="container py-12">
-		Footer
+{% set openingHours = get_opening_hours() %}
+<footer	class="bg-wfac-cream text-wfac-white flex flex-col gap-24 py-12">
+	{% include "partials/footer/footer-cta.twig" %}
+	<div	class="container grid grid-cols-7 gap-8"></div>
+	<div	class="container relative flex flex-col items-center z-40 text-wfac-dark-red">
+		<div	class="block-content max-w-[1400px] text-center">
+			{{ options.footer_acknowledgement }}
+		</div>
 	</div>
-	<div class="bg-white text-black py-4">
-		<div class="container text-xs flex gap-2 md:items-center max-md:flex-col md:justify-between">
+
+	<div	data-link-slider	class="overflow-hidden">
+		<div	data-slider	class="relative z-40 flex flex-row w-full">
+			{% for _ in 1..8 %}
+				<div	class="w-[30vw] px-[2vw] shrink-0">
+					{% include "icons/logo-no-text.twig" with { class: 'text-wfac-dark-red w-full' } %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+	<div	class="py-4 relative z-40">
+		<div	class="container text-xs flex gap-2 md:items-center max-md:flex-col md:justify-between">
 			<span>
 				&copy;
 				{{ 'now'|date('Y') }}
-				Start Digital. All Rights Reserved.</span>
-        <a href="https://startdigital.com.au" target="_blank">Site by Start</a>
+				Start Digital. All Rights Reserved.
+			</span>
+			<a	href="https://startdigital.com.au"	target="_blank">
+				Site by Start
+			</a>
 		</div>
 	</div>
 </footer>

@@ -1,0 +1,27 @@
+<div class="container flex flex-col gap-24">
+    <div class="flex flex-row justify-between relative z-40">
+        <div class="flex flex-row gap-2 items-center">
+            <div class="size-3 rounded-full {{ openingHours.is_open ? 'bg-wfac-green' : 'bg-wfac-dark-red' }}"></div>
+            <span class="font-medium">
+                {{ openingHours.status }}
+            </span>
+        </div>
+        <button class="flex flex-row gap-2 items-center">
+            <span>
+                Take me to the top
+            </span>
+            {% include "icons/top-arrow.twig" with { class: 'size-6' } %}
+        </button>
+    </div>
+    <div class="flex flex-row items-center gap-24">
+        <div id="footer-text-container" class="w-full min-h-[500px] pt-16">
+            {% include "icons/footer-text.twig" with { class: 'w-full text-wfac-dark-red' } %}
+        </div>
+        <div class="flex flex-col items-center gap-4 w-full relative z-40">
+            <div class="block-content max-w-[600px]">
+                {{ options.footer_content }}
+                {% include "partials/button.twig" with { link: options.newsletter.url, title: options.newsletter.title, target: options.newsletter.target, class: 'dark-red' } %}
+            </div>
+        </div>
+    </div>
+</div>

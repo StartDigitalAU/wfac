@@ -7,10 +7,9 @@ export default function initMouseFollowers() {
 function whatsOnMouseFollower() {
 	const mousefollowerElement = document.querySelector('[data-whats-on-mouse]')
 	const mousefollowerInner = mousefollowerElement.querySelector(':scope > div')
+	const mousefollowerText = mousefollowerInner.querySelector('span')
 
 	if (!mousefollowerElement) return
-
-	const innerWidth = mousefollowerInner.offsetWidth
 
 	gsap.set(mousefollowerElement, { xPercent: -50, yPercent: -100, scale: 0 })
 
@@ -30,18 +29,26 @@ function whatsOnMouseFollower() {
 
 	const tl = gsap.timeline({ paused: true })
 
-	tl.to(mousefollowerElement, {
-		scale: 1,
-		duration: 0.75,
-		ease: 'power4.inOut',
-	}).fromTo(
+	tl.fromTo(
+		mousefollowerElement,
+		{
+			scale: 0,
+		},
+		{
+			scale: 1,
+			duration: 0.75,
+			ease: 'power4.inOut',
+		}
+	).fromTo(
 		mousefollowerInner,
 		{
 			width: 0,
 			opacity: 0,
 		},
 		{
-			width: innerWidth,
+			width: () => {
+				return mousefollowerInner.scrollWidth
+			},
 			opacity: 1,
 			duration: 0.5,
 			ease: 'power2.out',
@@ -49,23 +56,19 @@ function whatsOnMouseFollower() {
 		'<=75%'
 	)
 
-	document.addEventListener(
-		'mouseenter',
-		(e) => {
-			if (e.target.closest('.post-tease')) {
-				tl.play()
-			}
-		},
-		true
-	)
+	const containers = document.querySelectorAll('.post-tease-container')
 
-	document.addEventListener(
-		'mouseleave',
-		(e) => {
-			if (e.target.closest('.post-tease')) {
-				tl.reverse()
+	containers.forEach((container) => {
+		container.addEventListener('mouseenter', (e) => {
+			const mouseText = container.getAttribute('data-mouse')
+			if (mouseText) {
+				mousefollowerText.textContent = mouseText
 			}
-		},
-		true
-	)
+			tl.invalidate().play()
+		})
+
+		container.addEventListener('mouseleave', (e) => {
+			tl.reverse()
+		})
+	})
 }

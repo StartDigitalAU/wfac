@@ -1,0 +1,21 @@
+<article class="post-tease shop-tease relative flex flex-col w-full gap-2 group text-wfac-cream {{ class }}">
+    <a href="{{ shop_item.link.url }}" class="absolute inset-0 h-full w-full z-20"></a>
+    <div class="image-container relative w-full h-[500px] overflow-hidden rounded-md !pointer-events-none">
+        <img src="{{ get_image(shop_item.image).src }}" alt="{{ shop_item.image.alt }}" class="absolute inset-0 w-full h-full object-cover" />
+    </div>
+    <div class="flex flex-row justify-between gap-8 !pointer-events-none">
+        <div class="flex flex-col gap-1">
+            <h4 class="is-h5 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 duration-[400ms] ease-in-out">
+                {{ shop_item.link.title }}
+            </h4>
+            <a href="{{ shop_item.artist.url }}" class="underline !pointer-events-auto opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 duration-[400ms] ease-in-out group-hover:delay-75">
+                {{ shop_item.artist.title }}
+            </a>
+        </div>
+        <div class="flex flex-col gap-1 w-fit opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 duration-[400ms] ease-in-out group-hover:delay-150">
+            <span class="is-h5">
+                {{ '$' ~ shop_item.price }}
+            </span>
+        </div>
+    </div>
+</article>

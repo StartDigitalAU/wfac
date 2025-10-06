@@ -1,3 +1,39 @@
-<section class="relative bg-wfac-cream min-h-lvh rounded-t-3xl -mt-6 z-40">
-    <div class="container"></div>
+<section id="home-stories" class="relative bg-wfac-cream text-wfac-dark-red min-h-lvh rounded-t-3xl -mt-6 overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-8 rounded-t-3xl z-40 bg-wfac-cream"></div>
+    <div class="container relative flex flex-col gap-24 z-40">
+        <div class="flex flex-row justify-between items-end gap-8">
+            <div class="block-content">
+                <div class="flex flex-col max-w-[500px]">
+                    {{ post.stories.heading }}
+                </div>
+            </div>
+            <div class="flex flex-row group" style="filter: url(#goo-effect-button);">
+                <button data-prev class="bg-white rounded-full size-16 flex justify-center items-center duration-300 ease-in-out hover:scale-90 group-hover:bg-wfac-accent-red">
+                    {% include "icons/arrow.twig" with { class: 'text-wfac-dark-red size-7 rotate-180 group-hover:text-wfac-white duration-300 ease-in-out' } %}
+                </button>
+                <button data-next class="bg-white rounded-full size-16 flex justify-center items-center duration-300 ease-in-out hover:scale-90 group-hover:bg-wfac-accent-red">
+                    {% include "icons/arrow.twig" with { class: 'text-wfac-dark-red size-7 group-hover:text-wfac-white duration-300 ease-in-out' } %}
+                </button>
+            </div>
+        </div>
+        <div data-link-slider data-mouse="Read" class="flex w-full post-tease-container">
+            <div data-slider class="flex flex-row">
+                {% for post_item in get_news_posts(12) %}
+                    <div class="w-[calc(25vw-1rem)] flex px-4">
+                        {% include "partials/teases/news-tease.twig" with { post: post_item} %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </section>
+
+<svg class="absolute inset-0 w-0 h-0">
+    <defs>
+        <filter id="goo-effect-button">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+            <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+        </filter>
+    </defs>
+</svg>

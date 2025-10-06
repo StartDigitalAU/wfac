@@ -4,6 +4,7 @@ namespace TheStart\Core;
 
 use Timber\Timber;
 use TheStart\Services\Formatting\DateFormatter;
+use TheStart\Services\Formatting\OpeningHoursFormatter;
 
 class Context
 {
@@ -37,6 +38,14 @@ class Context
 
         $functions['juggle_dates'] = array(
             'callable' => array($this, 'juggle_dates')
+        );
+
+        $functions['get_news_posts'] = array(
+            'callable' => array($this, 'get_news_posts')
+        );
+
+        $functions['get_opening_hours'] = array(
+            'callable' => array($this, 'get_opening_hours')
         );
 
         return $functions;
@@ -76,5 +85,30 @@ class Context
         $formatter = new DateFormatter();
         $formatted_date = $formatter->format($post_id);
         return $formatted_date;
+    }
+
+    public function get_news_posts($limit = -1)
+    {
+
+        $args = array(
+            'post_type' => 'post',
+            'posts_per_page' => $limit,
+            'orderby' => 'date',
+            'order' => 'DESC'
+        );
+
+        return Timber::get_posts($args);
+    }
+
+    public function get_opening_hours()
+    {
+        $opening_hours = new OpeningHoursFormatter();
+
+        $return_array = array(
+            'status' => $opening_hours->get_status(),
+            'is_open' => $opening_hours->is_currently_open()
+        );
+
+        return $return_array;
     }
 }

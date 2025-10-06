@@ -32,7 +32,7 @@
     <div class="container flex flex-row gap-12 relative z-20 bg-wfac-dark-red">
         <div class="absolute bottom-full left-0 w-full h-[25lvh] bg-gradient-to-t from-wfac-dark-red to-wfac-dark-red/0"></div>
         {{ _self.filterNav(filterItems, 'featured') }}
-        <div class="grid grid-cols-6 gap-8 w-full">
+        <div data-mouse="Get Info" class="post-tease-container grid grid-cols-6 gap-8 w-full">
             {% for course in post.on_now.featured %}
                 {% include "partials/teases/courses-tease.twig" with { course: course, class: loop.index <= 2 ? 'top-teases' : 'bottom-teases'  } %}
             {% endfor %}

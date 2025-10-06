@@ -24,6 +24,7 @@
 		"postcss-cli": "^10.1.0",
 		"postcss-import": "^15.1.0",
 		"postcss-nested": "^6.0.1",
+		"smooothy": "^0.0.26",
 		"swiper": "^10.3.1",
 		"three": "^0.180.0"
 	},

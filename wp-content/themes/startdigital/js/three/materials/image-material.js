@@ -21,12 +21,14 @@ class ImageMaterial {
 			uniform vec2 uTextureSize;
 			uniform vec2 uQuadSize;
 			varying vec2 vUvCover;
+			varying vec2 vUv;
 			
 
 			${uvCoverVert}
 
 			void main() {
 				vUvCover = getCoverUvVert(uv, uTextureSize, uQuadSize);
+				vUv = uv;
 				gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 			}
 		`
@@ -36,6 +38,7 @@ class ImageMaterial {
 			uniform float uTime;
 			uniform vec2 uQuadSize;
 			varying vec2 vUvCover;
+			varying vec2 vUv;
 			uniform float uProgress;
 
 			${simplexNoise}
@@ -44,25 +47,27 @@ class ImageMaterial {
 				
 				vec3 texture = texture2D(uTexture, vUvCover).rgb;
 
-				vec2 squareUv = vUvCover;
+				// Use original UV for square calculation and distance
+				vec2 squareUv = vUv;
                 float aspect = uQuadSize.x / uQuadSize.y;
                 
                 if (aspect > 1.0) {
-                    squareUv.x = (vUvCover.x - 0.5) * aspect + 0.5;
+                    squareUv.x = (vUv.x - 0.5) * aspect + 0.5;
                 } else {
-                    squareUv.y = (vUvCover.y - 0.5) / aspect + 0.5;
+                    squareUv.y = (vUv.y - 0.5) / aspect + 0.5;
                 }
 
-				vec2 centeredUv = vUvCover - 0.5;
+				// Use original UV for distance calculation
+				vec2 centeredUv = vUv - 0.5;
                 float distanceFromCenter = length(centeredUv);
 
 				// Add noise
-                float scale = 5.0;
-                vec3 coord = vec3(squareUv * scale, uTime * 0.4);
+                float scale = 4.5;
+                vec3 coord = vec3(squareUv * scale, uTime * 0.3);
                 float n = snoise(coord);
                 float noiseStrength = 0.1;
 
-				float maxRadius = sqrt(2.0) * 0.65;
+				float maxRadius = sqrt(2.0) * 0.55;
                 float currentRadius = 1.0 - uProgress * maxRadius;
                 
                 float modulatedRadius = currentRadius + n * noiseStrength;

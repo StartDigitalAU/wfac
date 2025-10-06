@@ -1,4 +1,4 @@
-import { PlaneGeometry, Mesh, MeshBasicMaterial } from 'three'
+import { Mesh, MeshBasicMaterial, Shape, ShapeGeometry } from 'three'
 import * as THREE from 'three'
 import { getLenis } from '../../utils/smooth-scroll'
 import ImageMaterial from '../materials/image-material'
@@ -15,6 +15,8 @@ class TrackedPlane {
 		this.config = {
 			material: config.material,
 			zPosition: config.zPosition || 0,
+			borderRadius: config.borderRadius || 0.025,
+			smoothness: config.smoothness || 8,
 			...config,
 		}
 
@@ -24,12 +26,98 @@ class TrackedPlane {
 		this.smoothVelocity = 0
 		this.velocityLerpFactor = 0.1
 
-		this.geometry = new PlaneGeometry(1, 1, 16, 16)
+		// Track last dimensions to avoid unnecessary geometry updates
+		this.lastDimensions = null
+
+		this.geometry = this.createRoundedRectGeometry(1, 1)
 		this.mesh = new Mesh(this.geometry, this.material)
 		this.scene.add(this.mesh)
 
 		this.setupListeners()
 		this.updatePlane()
+	}
+
+	createRoundedRectGeometry(width, height) {
+		const radius = Math.min(width, height) * this.config.borderRadius
+
+		const shape = new Shape()
+		const x = -width / 2
+		const y = -height / 2
+		const r = Math.min(radius, Math.min(width, height) / 2)
+
+		shape.moveTo(x, y + r)
+		shape.lineTo(x, y + height - r)
+		shape.quadraticCurveTo(x, y + height, x + r, y + height)
+		shape.lineTo(x + width - r, y + height)
+		shape.quadraticCurveTo(x + width, y + height, x + width, y + height - r)
+		shape.lineTo(x + width, y + r)
+		shape.quadraticCurveTo(x + width, y, x + width - r, y)
+		shape.lineTo(x + r, y)
+		shape.quadraticCurveTo(x, y, x, y + r)
+
+		const geometry = new ShapeGeometry(shape, this.config.smoothness)
+		this.fixUVs(geometry, width, height)
+
+		return geometry
+	}
+
+	fixUVs(geometry, width, height) {
+		const uvAttribute = geometry.attributes.uv
+		const posAttribute = geometry.attributes.position
+
+		for (let i = 0; i < posAttribute.count; i++) {
+			const x = posAttribute.getX(i)
+			const y = posAttribute.getY(i)
+
+			const u = (x + width / 2) / width
+			const v = (y + height / 2) / height
+
+			uvAttribute.setXY(i, u, v)
+		}
+
+		uvAttribute.needsUpdate = true
+	}
+
+	needsGeometryUpdate(worldDimensions) {
+		if (!this.lastDimensions) return true
+
+		const threshold = 0.001
+		return (
+			Math.abs(this.lastDimensions.width - worldDimensions.width) > threshold ||
+			Math.abs(this.lastDimensions.height - worldDimensions.height) > threshold
+		)
+	}
+
+	updateGeometry(worldDimensions) {
+		this.geometry.dispose()
+		this.geometry = this.createRoundedRectGeometry(
+			worldDimensions.width,
+			worldDimensions.height
+		)
+		this.mesh.geometry = this.geometry
+
+		if (this.imageMaterial) {
+			this.imageMaterial.material.uniforms.uQuadSize.value.set(
+				worldDimensions.width,
+				worldDimensions.height
+			)
+		}
+
+		this.lastDimensions = { ...worldDimensions }
+	}
+
+	updatePosition(rect, containerRect) {
+		const centerX = rect.left + rect.width / 2 - containerRect.left
+		const centerY = rect.top + rect.height / 2 - containerRect.top
+
+		const ndcX = (centerX / containerRect.width) * 2 - 1
+		const ndcY = -((centerY / containerRect.height) * 2 - 1)
+
+		const { width, height } = this.getFrustumDimensions(this.config.zPosition)
+		const worldX = ndcX * (width / 2)
+		const worldY = ndcY * (height / 2)
+
+		this.mesh.position.set(worldX, worldY, this.config.zPosition)
 	}
 
 	updatePlane() {
@@ -43,45 +131,18 @@ class TrackedPlane {
 		const rect = this.element.getBoundingClientRect()
 		const containerRect = this.getContainerRect()
 
-		// Get world dimensions from pixel dimensions using configured z position
 		const worldDimensions = this.getWorldSizeFromPixels({
 			width: rect.width,
 			height: rect.height,
 		})
 
-		// Update geometry with new dimensions
-		this.geometry.dispose()
-		this.geometry = new PlaneGeometry(
-			worldDimensions.width,
-			worldDimensions.height,
-			16,
-			16
-		)
-		this.mesh.geometry = this.geometry
-
-		// Update material uniforms with new quad size
-		if (this.imageMaterial) {
-			this.imageMaterial.material.uniforms.uQuadSize.value = new THREE.Vector2(
-				worldDimensions.width,
-				worldDimensions.height
-			)
+		// Only recreate geometry if dimensions changed
+		if (this.needsGeometryUpdate(worldDimensions)) {
+			this.updateGeometry(worldDimensions)
 		}
 
-		// Calculate center position relative to the container
-		const centerX = rect.left + rect.width / 2 - containerRect.left
-		const centerY = rect.top + rect.height / 2 - containerRect.top
-
-		// Convert to NDC coordinates using container dimensions
-		const ndcX = (centerX / containerRect.width) * 2 - 1
-		const ndcY = -((centerY / containerRect.height) * 2 - 1)
-
-		// Convert to world coordinates using the configured z position
-		const { width, height } = this.getFrustumDimensions(this.config.zPosition)
-		const worldX = ndcX * (width / 2)
-		const worldY = ndcY * (height / 2)
-
-		// Set position with configured z position
-		this.mesh.position.set(worldX, worldY, this.config.zPosition)
+		// Always update position (cheap operation)
+		this.updatePosition(rect, containerRect)
 	}
 
 	createMaterial() {
@@ -180,14 +241,24 @@ class TrackedPlane {
 		return new THREE.Vector2(worldDimensions.width, worldDimensions.height)
 	}
 
-	// Method to update z position after instantiation
 	setZPosition(zPosition) {
 		this.config.zPosition = zPosition
-		this.updatePlane() // Recalculate position and size with new z value
+		this.lastDimensions = null // Force geometry update on next update
+		this.updatePlane()
 	}
 
 	getZPosition() {
 		return this.config.zPosition
+	}
+
+	setBorderRadius(borderRadius) {
+		this.config.borderRadius = borderRadius
+		this.lastDimensions = null // Force geometry update on next update
+		this.updatePlane()
+	}
+
+	getBorderRadius() {
+		return this.config.borderRadius
 	}
 
 	getFrustumDimensions(zPosition = 0) {
@@ -201,7 +272,6 @@ class TrackedPlane {
 
 	getWorldSizeFromPixels(options) {
 		const containerRect = this.getContainerRect()
-		// Use the configured z position for calculations
 		const { width: frustumWidth, height: frustumHeight } =
 			this.getFrustumDimensions(this.config.zPosition)
 		const result = {}
@@ -244,7 +314,6 @@ class TrackedPlane {
 		if (this.imageMaterial && this.imageMaterial.dispose) {
 			this.imageMaterial.dispose()
 		}
-		this.lenis.off('scroll', this.updatePlane.bind(this))
 		window.removeEventListener('resize', this.updatePlane.bind(this))
 	}
 }
