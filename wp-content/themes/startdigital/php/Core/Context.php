@@ -28,6 +28,8 @@ class Context
         $context['art_classes_menu'] = Timber::get_menu('Art Classes');
         $context['visit_menu'] = Timber::get_menu('Visit');
         $context['engage_menu'] = Timber::get_menu('Engage');
+        $context['about_menu'] = Timber::get_menu('About');
+
         $context['site'] = new \Timber\Site();
 
         return $context;
@@ -53,6 +55,10 @@ class Context
 
         $functions['get_opening_hours'] = array(
             'callable' => array($this, 'get_opening_hours')
+        );
+
+        $functions['get_exhibitions'] = array(
+            'callable' => array($this, 'get_exhibitions')
         );
 
         return $functions;
@@ -117,5 +123,18 @@ class Context
         );
 
         return $return_array;
+    }
+
+    public function get_exhibitions($limit = -1)
+    {
+
+        $args = array(
+            'post_type' => 'whatson',
+            'posts_per_page' => $limit,
+            'orderby' => 'date',
+            'order' => 'DESC'
+        );
+
+        return Timber::get_posts($args);
     }
 }

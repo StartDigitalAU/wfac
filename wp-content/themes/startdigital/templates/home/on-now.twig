@@ -7,35 +7,32 @@
 ] %}
 
 {% macro filterNav(items, activeFilter = 'featured') %}
-    <div class="w-1/2 pt-32 sticky top-0 left-0 flex flex-col self-start gap-4 text-left">
-        {% for item in items %}
-            {% if item.type == 'link' %}
-                <a href="{{ item.url }}" class="is-h4 text-wfac-cream opacity-70 hover:opacity-100 duration-300 ease-in-out">
-                    {{ item.label }}
-                </a>
-            {% else %}
-                <button {{ item.filter == activeFilter ? 'disabled' : '' }} data-home-filter="{{ item.filter }}" class="is-h4 {{ item.filter == activeFilter ? 'text-wfac-accent-red' : 'text-wfac-cream opacity-70 hover:opacity-100 duration-300 ease-in-out' }} w-fit">
-                    {{ item.label }}
-                </button>
-            {% endif %}
-        {% endfor %}
-    </div>
+	<div class="w-1/2 pt-32 sticky top-0 left-0 flex flex-col self-start gap-4 text-left">
+		{% for item in items %}
+			{% if item.type == 'link' %}
+				<a href="{{ item.url }}" class="is-h4 text-wfac-cream opacity-70 hover:opacity-100 duration-300 ease-in-out">
+					{{ item.label }}
+				</a>
+			{% else %}
+				<button {{ item.filter == activeFilter ? 'disabled' : '' }} data-home-filter="{{ item.filter }}" class="is-h4 {{ item.filter == activeFilter ? 'text-wfac-accent-red' : 'text-wfac-cream opacity-70 hover:opacity-100 duration-300 ease-in-out' }} w-fit">
+					{{ item.label }}
+				</button>
+			{% endif %}
+		{% endfor %}
+	</div>
 {% endmacro %}
 
 {% include "partials/mouse-follower.twig" %}
 <section id="home-on-now" class="bg-wfac-dark-red relative pb-80">
-    <div class="container h-lvh flex flex-col items-center justify-center sticky top-0 left-0">
-        <div class="block-content text-wfac-accent-red">
-            {{ post.on_now.heading }}
-        </div>
-    </div>
-    <div class="container flex flex-row gap-12 relative z-20 bg-wfac-dark-red">
-        <div class="absolute bottom-full left-0 w-full h-[25lvh] bg-gradient-to-t from-wfac-dark-red to-wfac-dark-red/0"></div>
-        {{ _self.filterNav(filterItems, 'featured') }}
-        <div data-mouse="Get Info" class="post-tease-container grid grid-cols-6 gap-8 w-full">
-            {% for course in post.on_now.featured %}
-                {% include "partials/teases/courses-tease.twig" with { course: course, class: loop.index <= 2 ? 'top-teases' : 'bottom-teases'  } %}
-            {% endfor %}
-        </div>
-    </div>
+	<div class="container h-lvh flex flex-col items-center justify-center sticky top-0 left-0">
+		<div class="block-content text-wfac-accent-red">
+			{{ post.on_now.heading }}
+		</div>
+	</div>
+	<div class="container flex flex-row gap-12 relative z-20 bg-wfac-dark-red">
+		<div class="absolute bottom-full left-0 w-full h-[25lvh] bg-gradient-to-t from-wfac-dark-red to-wfac-dark-red/0"></div>
+		{{ _self.filterNav(filterItems, 'featured') }}
+		{% include "home/on-now-grid.twig" with { courses: post.on_now.featured } %}
+		{% include "home/on-now-grid.twig" with { courses: post.on_now.featured } %}
+	</div>
 </section>

@@ -1,5 +1,6 @@
 import Core from 'smooothy'
 import gsap from 'gsap'
+import { damp } from 'smooothy' // Import the damp utility
 
 export class LinkSlider extends Core {
 	constructor(container, config = {}) {
@@ -11,6 +12,18 @@ export class LinkSlider extends Core {
 		this.isHovered = false
 		this.autoScrollSpeed = 0
 
+		this.lagElements = this.items
+			.map((item) => item.querySelector('[data-lag]') || item.firstElementChild)
+			.filter(Boolean)
+
+		this.lagPositions = new Array(this.lagElements.length).fill(0)
+
+		this.lagConfig = {
+			speedMultiplier: 60,
+			dampingFactor: 6.0,
+			...config.lag,
+		}
+
 		this.#handleLinks()
 		this.#setupArrows(config.arrows)
 		this.#setupAutoplay(config.autoplay)
@@ -20,10 +33,32 @@ export class LinkSlider extends Core {
 		if (!this.isDragging && !this.isHovered && this.autoScrollSpeed !== 0) {
 			this.target += this.autoScrollSpeed
 		}
+
 		super.update()
+		this.#applyLagEffect()
 	}
 
-	// Add method to control auto-scroll
+	#applyLagEffect() {
+		if (!this.parallaxValues || !this.lagElements.length) return
+
+		this.lagElements.forEach((element, i) => {
+			if (!element || !this.parallaxValues) return
+
+			const parallaxValue = this.parallaxValues[i] || 0
+
+			const targetOffset =
+				Math.abs(this.speed) * this.lagConfig.speedMultiplier * parallaxValue
+
+			this.lagPositions[i] = damp(
+				this.lagPositions[i],
+				targetOffset,
+				this.lagConfig.dampingFactor,
+				this.deltaTime
+			)
+			element.style.transform = `translateX(${this.lagPositions[i]}px)`
+		})
+	}
+
 	setAutoScrollSpeed(speed) {
 		this.autoScrollSpeed = speed
 	}
@@ -75,18 +110,7 @@ export class LinkSlider extends Core {
 			})
 		}
 
-		// Start autoplay
 		this.startAutoplay(interval)
-	}
-
-	startAutoplay(interval = 3000) {
-		this.stopAutoplay()
-
-		this.autoplayInterval = setInterval(() => {
-			if (!this.isDragging && this.isVisible && !this.isHovered) {
-				this.goToNext()
-			}
-		}, interval)
 	}
 
 	stopAutoplay() {
@@ -143,5 +167,56 @@ export class LinkSlider extends Core {
 
 			parent.style.userSelect = 'none'
 		})
+	}
+
+	goToNext() {
+		if (this.isAnimating) return
+
+		this.isAnimating = true
+		const nextTarget = this.config.infinite
+			? Math.round(this.target - 1)
+			: Math.max(this.maxScroll, Math.round(this.target - 1))
+
+		gsap.to(this, {
+			target: nextTarget,
+			duration: 0.55,
+			ease: 'power1.inOut',
+			onComplete: () => {
+				this.isAnimating = false
+			},
+		})
+	}
+
+	goToPrev() {
+		if (this.isAnimating) return
+
+		this.isAnimating = true
+		const prevTarget = this.config.infinite
+			? Math.round(this.target + 1)
+			: Math.min(0, Math.round(this.target + 1))
+
+		gsap.to(this, {
+			target: prevTarget,
+			duration: 0.55,
+			ease: 'power1.inOut',
+			onComplete: () => {
+				this.isAnimating = false
+			},
+		})
+	}
+
+	startAutoplay(interval = 3000) {
+		this.stopAutoplay()
+
+		this.autoplayInterval = setInterval(() => {
+			if (
+				!this.isDragging &&
+				this.isVisible &&
+				!this.isHovered &&
+				!this.isAnimating
+			) {
+				this.goToNext()
+			}
+		}, interval)
 	}
 }
