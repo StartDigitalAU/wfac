@@ -22,6 +22,19 @@ wp-content/*
 !wp-content/themes/index.php
 !wp-content/themes/startdigital
 !wp-content/themes/startdigital/**
+!wp-content/themes/freoarts_old
+!wp-content/themes/freoarts_old/**
+wp-content/themes/freoarts_old/functions/logs
+wp-content/themes/freoarts_old/logs
+wp-content/themes/freoarts_old/lib
+wp-content/themes/freoarts_old/library
+wp-content/themes/freoarts_old/vendor
+wp-content/themes/freoarts_old/img
+wp-content/themes/freoarts_old/css
+wp-content/themes/freoarts_old/__MACOSX
+wp-content/themes/freoarts_old/acf-json
+wp-content/themes/freoarts_old/js
+
 
 wp-content/plugins/*
 wp-content/plugins/plugins.zip

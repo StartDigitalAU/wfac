@@ -33,6 +33,7 @@
 		<div class="absolute bottom-full left-0 w-full h-[25lvh] bg-gradient-to-t from-wfac-dark-red to-wfac-dark-red/0"></div>
 		{{ _self.filterNav(filterItems, 'featured') }}
 		{% include "home/on-now-grid.twig" with { courses: post.on_now.featured } %}
-		{% include "home/on-now-grid.twig" with { courses: post.on_now.featured } %}
+		{% include "home/on-now-grid.twig" with { courses: get_exhibitions(8) } %}
+		{% include "home/on-now-grid.twig" with { courses: get_art_classes(8) } %}
 	</div>
 </section>

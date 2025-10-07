@@ -61,6 +61,10 @@ class Context
             'callable' => array($this, 'get_exhibitions')
         );
 
+        $functions['get_art_classes'] = array(
+            'callable' => array($this, 'get_art_classes')
+        );
+
         return $functions;
     }
 
@@ -128,11 +132,37 @@ class Context
     public function get_exhibitions($limit = -1)
     {
 
+        // An exhibition is a whats on post type with
+        // either a exhibition_tag or exhibition_category
         $args = array(
             'post_type' => 'whatson',
             'posts_per_page' => $limit,
             'orderby' => 'date',
-            'order' => 'DESC'
+            'order' => 'DESC',
+            'tax_query' => array(
+                'relation' => 'OR',
+                array(
+                    'taxonomy' => 'exhibition_tag',
+                    'operator' => 'EXISTS'
+                ),
+                array(
+                    'taxonomy' => 'exhibition_category',
+                    'operator' => 'EXISTS'
+                )
+            )
+        );
+
+        return Timber::get_posts($args);
+    }
+
+    public function get_art_classes($limit = -1)
+    {
+        // All products on this site are an artclass
+        $args = array(
+            'post_type' => 'product',
+            'posts_per_page' => $limit,
+            'orderby' => 'date',
+            'order' => 'DESC',
         );
 
         return Timber::get_posts($args);
