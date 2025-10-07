@@ -10,6 +10,8 @@ use TheStart\PostTypes\PostTypeManager;
 use TheStart\Taxonomies\TaxonomyManager;
 use TheStart\Features\WooCommerce\ProductManager;
 use TheStart\Providers\HookProvider;
+use TheStart\Providers\GeneralHookProvider;
+use TheStart\Services\ConfigurationService;
 
 class TheStart extends Site
 {
@@ -51,6 +53,8 @@ class TheStart extends Site
      */
     private function getProviders(): array
     {
-        return [];
+        return [
+            new GeneralHookProvider(new ConfigurationService()),
+        ];
     }
 }

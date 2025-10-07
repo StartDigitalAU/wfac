@@ -21,7 +21,13 @@ class Context
         }
 
         $context['menu'] = Timber::get_menu();
+
+        //Footer Menu Items
         $context['footer_bottom_menu'] = Timber::get_menu('Footer Bottom Menu');
+        $context['program_menu'] = Timber::get_menu('Program');
+        $context['art_classes_menu'] = Timber::get_menu('Art Classes');
+        $context['visit_menu'] = Timber::get_menu('Visit');
+        $context['engage_menu'] = Timber::get_menu('Engage');
         $context['site'] = new \Timber\Site();
 
         return $context;

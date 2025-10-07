@@ -1,0 +1,12 @@
+<div class="flex flex-col gap-4 text-wfac-dark-red">
+	<h6 class="text-wfac-cream">
+		{{ title }}
+	</h6>
+	<div class="flex flex-col gap-3">
+		{% for item in menu.get_items() %}
+			<a href="{{ item.link }}" class="footer-menu-item text-lg font-medium">
+				{{ item.title }}
+			</a>
+		{% endfor %}
+	</div>
+</div>
