@@ -1,0 +1,31 @@
+<div class="container flex flex-row gap-12 relative z-40">
+	<div class="flex flex-col gap-4 text-wfac-dark-red">
+		<h6 class="text-wfac-cream">
+			Opening Hours
+		</h6>
+		<div class="flex flex-col gap-3">
+			{{ options.footer_opening_hours }}
+		</div>
+	</div>
+	<div class="flex flex-col gap-4 text-wfac-dark-red">
+		<h6 class="text-wfac-cream">
+			Contact Us
+		</h6>
+		<div class="flex flex-col gap-3">
+			<a href="tel:{{ options.company_details.phone }}" class="footer-menu-item">
+				{{ options.company_details.phone }}
+			</a>
+			<a href="mailto:{{ options.company_details.email }}" class="footer-menu-item before:w-full">
+				{{ options.company_details.email }}
+			</a>
+			<a href="{{ options.company_details.address_link }}" class="footer-menu-item flex flex-row gap-1 before:w-full">
+				{{ options.company_details.address }}
+				{% include "icons/arrow.twig" with { class: 'size-6 -rotate-45' } %}
+			</a>
+			<div class="flex flex-row gap-4 pt-4">
+				<a class="duration-400 ease-fancy hover:scale-90" href="{{ options.social_media.facebook }}">{% include "icons/facebook.twig" with { class: 'size-8' }  %}</a>
+				<a class="duration-400 ease-fancy hover:scale-90" href="{{ options.social_media.instagram }}">{% include "icons/instagram.twig" with { class: 'size-8' }  %}</a>
+			</div>
+		</div>
+	</div>
+</div>

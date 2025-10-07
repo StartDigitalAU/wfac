@@ -30,6 +30,7 @@ module.exports = {
 				heading: ['Freoarts Sans', 'sans-serif'],
 				body: ['Inter', 'sans-serif'],
 			},
+
 			screens: {
 				sm: '640px',
 				md: '768px',
@@ -38,6 +39,12 @@ module.exports = {
 				'2xl': '1435px',
 				'3xl': '1690px',
 				'4xl': '2000px',
+			},
+			transitionDuration: {
+				400: '400ms',
+			},
+			transitionTimingFunction: {
+				fancy: 'cubic-bezier(0.76, 0, 0.24, 1)',
 			},
 		},
 	},

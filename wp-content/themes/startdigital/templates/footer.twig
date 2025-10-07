@@ -1,32 +1,8 @@
 {% set openingHours = get_opening_hours() %}
-<footer	class="bg-wfac-cream text-wfac-white flex flex-col gap-24 py-12">
+<footer	class="bg-wfac-cream text-wfac-white flex flex-col gap-32 py-12 pb-4">
 	{% include "partials/footer/footer-cta.twig" %}
-	<div	class="container grid grid-cols-7 gap-8"></div>
-	<div	class="container relative flex flex-col items-center z-40 text-wfac-dark-red">
-		<div	class="block-content max-w-[1400px] text-center">
-			{{ options.footer_acknowledgement }}
-		</div>
-	</div>
-
-	<div	data-link-slider	class="overflow-hidden">
-		<div	data-slider	class="relative z-40 flex flex-row w-full">
-			{% for _ in 1..8 %}
-				<div	class="w-[30vw] px-[2vw] shrink-0">
-					{% include "icons/logo-no-text.twig" with { class: 'text-wfac-dark-red w-full' } %}
-				</div>
-			{% endfor %}
-		</div>
-	</div>
-	<div	class="py-4 relative z-40">
-		<div	class="container text-xs flex gap-2 md:items-center max-md:flex-col md:justify-between">
-			<span>
-				&copy;
-				{{ 'now'|date('Y') }}
-				Start Digital. All Rights Reserved.
-			</span>
-			<a	href="https://startdigital.com.au"	target="_blank">
-				Site by Start
-			</a>
-		</div>
-	</div>
+	{% include "partials/footer/footer-menu.twig" %}
+	{% include "partials/footer/footer-acknowledgement.twig" %}
+	{% include "partials/footer/footer-logo-slider.twig" %}
+	{% include "partials/footer/footer-byline.twig" %}
 </footer>

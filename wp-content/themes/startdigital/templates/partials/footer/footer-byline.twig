@@ -1,0 +1,26 @@
+<div class="py-4 relative z-40 text-wfac-dark-red text-sm">
+    <div class="container flex gap-4 items-center justify-between">
+        <div class="flex w-full">
+            <span>
+                &copy; WFAC™
+                {{ 'now'|date('Y') }}
+                All Rights Reserved
+            </span>
+        </div>
+        <div class="flex w-full justify-center">
+            <p class="text-center">
+                Site by
+                <a href="https://thestart.com.au" class="underline" target="_blank">
+                    The Start
+                </a>
+            </p>
+        </div>
+        <div class="flex flex-row gap-4 items-center w-full justify-end">
+            {% for item in footer_bottom_menu.get_items() %}
+                <a href="{{ item.link }}" class="footer-menu-item">
+                    {{ item.title }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<div data-link-slider class="overflow-hidden">
+    <div data-slider class="relative z-40 flex flex-row w-full">
+        {% for _ in 1..8 %}
+            <div class="w-[30vw] px-[2vw] shrink-0 footer-logo will-change-transform">
+                {% include "icons/logo-no-text.twig" with { class: 'text-wfac-dark-red w-full' } %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

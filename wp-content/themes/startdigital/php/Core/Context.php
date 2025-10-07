@@ -21,6 +21,7 @@ class Context
         }
 
         $context['menu'] = Timber::get_menu();
+        $context['footer_bottom_menu'] = Timber::get_menu('Footer Bottom Menu');
         $context['site'] = new \Timber\Site();
 
         return $context;

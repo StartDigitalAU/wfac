@@ -57,3 +57,7 @@ section#shadow-host-companion {
 		@apply mt-[20%];
 	}
 }
+
+.footer-logo path {
+	@apply fill-wfac-dark-red;
+}

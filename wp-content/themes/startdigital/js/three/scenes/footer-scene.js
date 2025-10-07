@@ -49,7 +49,7 @@ class FooterScene extends BaseScene {
 		}
 
 		this.linkSlider = new LinkSlider(this.sliderContainer, config)
-		this.linkSlider.setAutoScrollSpeed(-0.004)
+		this.linkSlider.setAutoScrollSpeed(0.003)
 	}
 
 	onResize() {
