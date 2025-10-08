@@ -1,5 +1,6 @@
 import gsap from 'gsap'
 import { getLenis } from '../../utils/smooth-scroll'
+import { animateFor } from '../../utils/animate-for'
 
 class MenuStateManager {
 	constructor() {
@@ -20,6 +21,7 @@ class MenuStateManager {
 			searchBg: document.querySelector('[data-search-bg]'),
 			menuButtons: document.querySelectorAll('[data-toggle-menu]'),
 			searchButtons: document.querySelectorAll('[data-toggle-search]'),
+			accordionHeaders: document.querySelectorAll('.menu-header'),
 		}
 
 		this.createTimelines()
@@ -36,13 +38,33 @@ class MenuStateManager {
 		}
 	}
 
+	closeAccordions() {
+		this.elements.accordionHeaders.forEach((header) => {
+			header.classList.remove('active')
+			const accordionContent = header.nextElementSibling
+			accordionContent.style.maxHeight = '0'
+			const icon = header.querySelector('.menu-icon')
+			if (icon) icon.style.transform = 'rotate(0deg)'
+			console.log('fired')
+		})
+
+		animateFor(300, () => {
+			const { width, height, top, left } =
+				this.elements.menuInnerContainer.getBoundingClientRect()
+			this.elements.menuBg.style.width = width + 'px'
+			this.elements.menuBg.style.height = height + 'px'
+		})
+	}
+
 	createMenuTimeline() {
 		const { width, height, top, left } =
 			this.elements.menuInnerContainer.getBoundingClientRect()
 		const { top: headerTop, left: headerLeft } =
 			this.elements.headerInnerContainer.getBoundingClientRect()
 
-		const tl = gsap.timeline({ paused: true })
+		const tl = gsap.timeline({
+			paused: true,
+		})
 		const targetTop = top - headerTop
 		const targetLeft = left - headerLeft
 
@@ -145,8 +167,9 @@ class MenuStateManager {
 					stagger: 0.01,
 					ease: 'power2.out',
 					duration: 0.5,
+					onReverseComplete: () => this.closeAccordions(),
 				},
-				'<=40%'
+				'<=65%'
 			)
 
 		return tl

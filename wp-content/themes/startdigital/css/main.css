@@ -11,7 +11,7 @@
 
 @layer components {
 	.container {
-		@apply max-w-full w-full px-6 md:px-8 mx-auto;
+		@apply max-w-full w-full px-4 md:px-8 mx-auto;
 	}
 }
 
@@ -32,21 +32,28 @@ body.menu-open {
 
 main {
 	section {
-		@apply relative py-16 lg:py-32 3xl:py-48;
+		@apply relative py-24 lg:py-32 3xl:py-48;
 	}
 }
 
-/* REMOVE LOOM EXTENSION PADDING */
-section#shadow-host-companion {
-	@apply !py-0;
-}
-
 .top-teases {
-	@apply col-span-3;
+	@apply col-span-full sm:col-span-3;
+
+	.image-container {
+		@apply aspect-[0.9];
+	}
+
+	h3 {
+		@apply is-h4 xl:text-[32px];
+	}
 }
 
 .bottom-teases {
-	@apply col-span-2;
+	@apply col-span-full sm:col-span-3 xl:col-span-2;
+
+	.image-container {
+		@apply aspect-[0.9] xl:aspect-3/4;
+	}
 
 	h3 {
 		@apply is-h4;
@@ -55,7 +62,11 @@ section#shadow-host-companion {
 
 .class-category-grid {
 	article:nth-of-type(3n + 2) {
-		@apply mt-[20%];
+		@apply sm:mt-[60%] lg:mt-[20%];
+	}
+
+	article:nth-of-type(3n + 3) {
+		@apply sm:-mt-[60%] lg:mt-0;
 	}
 }
 

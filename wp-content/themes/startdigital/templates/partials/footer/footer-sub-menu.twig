@@ -2,9 +2,9 @@
 	<h6 class="text-wfac-cream">
 		{{ title }}
 	</h6>
-	<div class="flex flex-col gap-2">
+	<div class="flex flex-col gap-1 lg:gap-2">
 		{% for item in menu.get_items() %}
-			<a href="{{ item.link }}" class="text- w-fit font-medium hover:bg-wfac-dark-red hover:text-wfac-accent-red px-3 py-1 -ml-3 rounded-full duration-400 ease-fancy">
+			<a href="{{ item.link }}" class="text- w-fit font-medium hover:bg-wfac-dark-red hover:text-wfac-accent-red px-3 py-0.5 lg:py-1 -ml-3 rounded-full duration-400 ease-fancy">
 				{{ item.title }}
 			</a>
 		{% endfor %}

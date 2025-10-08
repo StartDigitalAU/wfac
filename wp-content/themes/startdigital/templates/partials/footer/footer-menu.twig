@@ -1,5 +1,5 @@
-<div class="container w-[90%] flex flex-row justify-between gap-16 relative z-40">
-	<div class="flex flex-row gap-16">
+<div class="container w-full 3xl:w-[95%] 4xl:w-[90%] flex flex-col 2xl:flex-row justify-between gap-16 relative z-40">
+	<div class="flex flex-col sm:flex-row gap-8 sm:gap-12 3xl:gap-16">
 		<div class="flex flex-col gap-4 text-wfac-dark-red">
 			<h6 class="text-wfac-cream">
 				Opening Hours
@@ -30,7 +30,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex flex-row gap-16">
+	<div class="grid grid-cols-2 md:grid-cols-3 lg:flex flex-row gap-8 sm:gap-12 3xl:gap-16 justify-between">
 		{% include "partials/footer/footer-sub-menu.twig" with { title: 'Program', menu: program_menu  } %}
 		{% include "partials/footer/footer-sub-menu.twig" with { title: 'Art Classes', menu: art_classes_menu  } %}
 		{% include "partials/footer/footer-sub-menu.twig" with { title: 'Visit', menu: visit_menu  } %}

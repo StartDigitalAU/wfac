@@ -1,25 +1,27 @@
 {% set openingHours = get_opening_hours() %}
 
 <div id="home-hero-scroller" class="relative bg-wfac-cream rounded-b-3xl -mb-6">
-    <section id="home-hero" class="relative w-full h-lvh flex flex-col justify-end !py-4 text-wfac-white z-40">
-        {# <video id="home-hero-video" src="{{ post.hero.video.url }}" class="absolute top-0 left-0 w-full h-full object-cover opacity-0" autoplay playsinline loop muted></video> #}
-        <video id="home-hero-video" src="http://wfac.test/wp-content/uploads/2025/09/Hero.mp4" class="absolute top-0 left-0 w-full h-full object-cover opacity-0" autoplay playsinline loop muted></video>
-        <div class="container relative z-40 flex flex-row justify-between items-center">
-            <div class="flex flex-row gap-2 items-center hero__bottom-text">
-                <div class="size-3 rounded-full {{ openingHours.is_open ? 'bg-wfac-green' : 'bg-wfac-accent-red' }}"></div>
-                <span class="font-medium">
-                    {{ openingHours.status }}
-                </span>
-            </div>
-            <span class="font-light hero__bottom-text">
-                {{ options.company_details.opening_hours }}
-                {{ post.hero.bottom_right }}
-            </span>
-        </div>
-        {% include "icons/logo-no-text.twig" with { class: 'hero-svg w-[40%] max-w-[600px] absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-40 opacity-0' } %}
-    </section>
-    <div class="container flex flex-col items-center -mt-[15lvh] pb-32">
-        {% include "icons/breathe.twig" with { class: 'text-wfac-dark-red w-3/4' } %}
-    </div>
-    <div class="absolute bottom-0 left-0 w-full h-8 rounded-b-3xl z-40 bg-wfac-cream"></div>
+	<section
+		id="home-hero" class="relative w-full h-lvh flex flex-col justify-end !py-4 text-wfac-white z-40">
+		{# <video id="home-hero-video" src="{{ post.hero.video.url }}" class="absolute top-0 left-0 w-full h-full object-cover opacity-0" autoplay playsinline loop muted></video> #}
+		<video id="home-hero-video" src="http://wfac.test/wp-content/uploads/2025/09/Hero.mp4" class="absolute top-0 left-0 w-full h-full object-cover opacity-0" autoplay playsinline loop muted></video>
+		<div class="container relative z-40 flex flex-col gap-2 sm:flex-row justify-between items-center">
+			<div class="flex flex-row gap-2 items-center hero__bottom-text">
+				<div class="size-3 rounded-full {{ openingHours.is_open ? 'bg-wfac-green' : 'bg-wfac-accent-red' }}"></div>
+				<span class="font-medium">
+					{{ openingHours.status }}
+				</span>
+			</div>
+			<span class="font-light flex flex-row items-center gap-4 hero__bottom-text">
+				{{ options.company_details.opening_hours }}
+				<div class="size-1.5 rounded-full bg-wfac-white"></div>
+				{{ post.hero.bottom_right }}
+			</span>
+		</div>
+		{% include "icons/logo-no-text.twig" with { class: 'hero-svg w-[75%] sm:w-[60%] lg:w-[40%] max-w-[600px] absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-40 opacity-0' } %}
+	</section>
+	<div class="container flex flex-col items-center -mt-[15lvh] pb-12 sm:pb-24 2xl:pb-48">
+		{% include "icons/breathe.twig" with { class: 'text-wfac-dark-red w-full lg:w-[80%] 2xl:w-3/4' } %}
+	</div>
+	<div class="absolute bottom-0 left-0 w-full h-8 rounded-b-3xl z-40 bg-wfac-cream"></div>
 </div>

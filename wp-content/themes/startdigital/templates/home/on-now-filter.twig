@@ -1,0 +1,22 @@
+{% set activeFilter = 'featured' %}
+{% set filterItems = [
+    { filter: 'featured', label: 'Featured' },
+    { filter: 'exhibition', label: 'Exhibitions' },
+    { filter: 'art-classes', label: 'Art Classes' },
+    { filter: 'events', label: 'Events' },
+    { type: 'link', url: '/whats-on', label: 'Explore All' }
+] %}
+
+<div class="w-full lg:max-w-[220px] xl:max-w-[300px] 3xl:max-w-[350px] pt-32 lg:sticky top-0 left-0 flex lg:flex-col flex-wrap self-start gap-4 text-left">
+	{% for item in filterItems %}
+		{% if item.type == 'link' %}
+			<a href="{{ item.url }}" class="is-h4 text-wfac-cream opacity-70 hover:opacity-100 duration-300 ease-in-out">
+				{{ item.label }}
+			</a>
+		{% else %}
+			<button {{ item.filter == activeFilter ? 'disabled' : '' }} data-home-filter="{{ item.filter }}" class="is-h4 w-fit text-wfac-cream opacity-70 hover:opacity-100 duration-300 ease-in-out [&.active]:text-wfac-accent-red [&.active]:opacity-100 {{ item.filter == activeFilter ? 'active' : '' }}">
+				{{ item.label }}
+			</button>
+		{% endif %}
+	{% endfor %}
+</div>

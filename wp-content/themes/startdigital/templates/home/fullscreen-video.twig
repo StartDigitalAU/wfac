@@ -1,12 +1,12 @@
 {% set video_url = post.fullscreen_video.video.url ?: 'http://wfac.test/wp-content/uploads/2025/09/Hero.mp4' %}
 
-<section class="min-h-[150lvh] rounded-3xl -my-6 relative z-40 overflow-hidden flex flex-col justify-end py-64">
-    <video src="{{ video_url }}" class="absolute h-full w-full top-0 left-0 object-cover" autoplay muted playsinline loop></video>
-    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-black/25"></div>
-    <div class="container relative z-20 text-wfac-cream">
-        <div class="block-content max-w-[800px]">
-            {{ post.fullscreen_video.content }}
-            {% include "partials/button.twig" with { link: post.fullscreen_video.link.url, title: post.fullscreen_video.link.title, target: post.fullscreen_video.link.target, class: 'mt-2' } %}
-        </div>
-    </div>
+<section class="min-h-[150lvh] rounded-3xl -my-6 relative z-40 overflow-hidden flex flex-col justify-end xl:py-32">
+	<video src="{{ video_url }}" class="absolute h-full w-full top-0 left-0 object-cover" autoplay muted playsinline loop></video>
+	<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-black/25"></div>
+	<div class="container relative z-20 text-wfac-cream">
+		<div class="block-content max-w-[600px] xl:max-w-[800px]">
+			{{ post.fullscreen_video.content }}
+			{% include "partials/button.twig" with { link: post.fullscreen_video.link.url, title: post.fullscreen_video.link.title, target: post.fullscreen_video.link.target, class: 'mt-2' } %}
+		</div>
+	</div>
 </section>

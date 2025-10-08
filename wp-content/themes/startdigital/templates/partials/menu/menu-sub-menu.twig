@@ -1,14 +1,19 @@
-<div class="flex flex-col gap-4 text-wfac-dark-red">
-	<span class="menu-animate is-h6 text-wfac-sand">
-		{{ title }}
-	</span>
-	<ul class="flex flex-col gap-3">
-		{% for item in menu.get_items() %}
-			<li class="menu-animate">
-				<a href="{{ item.link }}" class="text-wfac-cream hover:bg-wfac-accent-red hover:text-wfac-dark-red px-3 py-2 -ml-3 rounded-full  text-sm font-medium duration-400 ease-fancy">
-					{{ item.title }}
-				</a>
-			</li>
-		{% endfor %}
-	</ul>
+<div class="flex flex-col text-wfac-dark-red {{ class }}">
+	<button class="menu-header menu-animate is-h6 text-wfac-sand text-left flex items-center gap-3 justify-between w-fit lg:pointer-events-none" aria-expanded="false">
+		<span>{{ title }}</span>
+		<svg class="menu-icon size-4 -mt-1 transition-transform duration-300 lg:hidden" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+		</svg>
+	</button>
+	<div class="menu-content overflow-hidden transition-all duration-300 ease-fancy lg:!max-h-none lg:!overflow-visible">
+		<ul class=" flex flex-col gap-1 pt-4">
+			{% for item in menu.get_items() %}
+				<li class="menu-animate">
+					<a href="{{ item.link }}" class="text-wfac-cream hover:bg-wfac-accent-red hover:text-wfac-dark-red px-3 py-2 -ml-3 rounded-full text-sm font-medium duration-400 ease-fancy block">
+						{{ item.title }}
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
 </div>

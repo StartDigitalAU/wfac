@@ -1,22 +1,22 @@
 <section class="bg-wfac-sand min-h-lvh relative !pt-0 -mb-6">
-    <div id="home-art-classes" class="min-h-lvh flex justify-center items-center sticky top-0 left-0 z-40">
-        <div class="container text-wfac-dark-red flex flex-col items-center">
-            <div class="block-content text-center max-w-[800px] [&>p]:max-w-[500px] items-center">
-                {{ post.art_classes.content }}
-                {% include "partials/button.twig" with { link: post.art_classes.link.url, title: post.art_classes.link.title, target: post.art_classes.link.target, class: 'mt-2 dark-red' } %}
-            </div>
-        </div>
-    </div>
-    <div class="min-h-lvh bg-wfac-sand relative z-40">
-        <div class="absolute bottom-full left-0 w-full h-[25lvh] bg-gradient-to-t from-wfac-sand to-wfac-sand/0 pointer-events-none"></div>
-        <div class="container grid grid-cols-3 gap-8 max-w-[90%] class-category-grid">
-            {% for class_category in post.art_classes.class_categories %}
-                {% set adults = class_category.adult_categories is iterable ? class_category.adult_categories : [] %}
-                {% set kids = class_category.kids_categories is iterable ? class_category.kids_categories : [] %}
-                {% set terms = adults|merge(kids) %}
-                {% include "partials/teases/class-categories-tease.twig" %}
-            {% endfor %}
-        </div>
-    </div>
-    <div class="absolute bottom-0 left-0 w-full h-8 rounded-b-3xl z-40 bg-wfac-sand"></div>
+	<div id="home-art-classes" class="min-h-lvh flex justify-center items-center sticky top-0 left-0 z-40">
+		<div class="container text-wfac-dark-red flex flex-col items-center">
+			<div class="block-content text-center max-w-[800px] [&>p]:max-w-[500px] items-center">
+				{{ post.art_classes.content }}
+				{% include "partials/button.twig" with { link: post.art_classes.link.url, title: post.art_classes.link.title, target: post.art_classes.link.target, class: 'mt-2 dark-red' } %}
+			</div>
+		</div>
+	</div>
+	<div class="min-h-[75lvh] bg-wfac-sand relative z-40 max-sm:pb-0 max-lg:pb-8">
+		<div class="absolute bottom-full left-0 w-full h-[25lvh] bg-gradient-to-t from-wfac-sand to-wfac-sand/0 pointer-events-none"></div>
+		<div class="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 sm:gap-6 sm:gap-y-20 xl:gap-8 3xl:w-[95%] 4xl:w-[90%] class-category-grid">
+			{% for class_category in post.art_classes.class_categories %}
+				{% set adults = class_category.adult_categories is iterable ? class_category.adult_categories : [] %}
+				{% set kids = class_category.kids_categories is iterable ? class_category.kids_categories : [] %}
+				{% set terms = adults|merge(kids) %}
+				{% include "partials/teases/class-categories-tease.twig" %}
+			{% endfor %}
+		</div>
+	</div>
+	<div class="absolute bottom-0 left-0 w-full h-8 rounded-b-3xl z-40 bg-wfac-sand"></div>
 </section>

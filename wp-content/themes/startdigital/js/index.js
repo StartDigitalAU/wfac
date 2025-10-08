@@ -8,10 +8,12 @@ import initButtonAnimation from './components/button'
 import initSliders from './components/sliders/sliders'
 import initHeaderHoverAnimation from './components/header/header-hover'
 import MenuStateManager from './components/header/menu-state-manager'
+import initMenuAccordions from './components/header/header-accordion'
 
 document.addEventListener('DOMContentLoaded', () => {
 	initSmoothScrolling()
 	initHeaderHoverAnimation()
+	initMenuAccordions()
 	new MenuStateManager()
 	initRemoveLinks()
 	initHeaderOnScroll()

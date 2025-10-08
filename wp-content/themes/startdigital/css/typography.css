@@ -30,27 +30,27 @@ h5,
 .is-h5,
 h6,
 .is-h6 {
-	@apply font-heading leading-none;
+	@apply font-heading leading-[1.1];
 }
 
 h1,
 .is-h1 {
-	@apply text-[96px];
+	@apply text-[48px] sm:text-[64px] md:text-[80px] xl:text-[96px];
 }
 
 h2,
 .is-h2 {
-	@apply text-[64px];
+	@apply text-[32px] sm:text-[48px] md:text-[54px] xl:text-[64px];
 }
 
 h3,
 .is-h3 {
-	@apply text-[32px];
+	@apply text-[24px] md:text-[28px] xl:text-[32px];
 }
 
 h4,
 .is-h4 {
-	@apply text-[24px];
+	@apply text-[20px] md:text-[24px];
 }
 
 h5,

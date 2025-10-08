@@ -5,7 +5,7 @@ class FooterMaterial {
 	constructor(seed = 0) {
 		this.uniforms = {
 			uTime: { value: 0.0 },
-			uProgress: { value: 0.135 },
+			uProgress: { value: 0.175 },
 			uQuadSize: { value: new THREE.Vector2(1.0, 1.0) },
 			uContainerSize: { value: new THREE.Vector2(1.0, 1.0) },
 			uContainerCenter: { value: new THREE.Vector2(0.5, 0.5) },
@@ -38,40 +38,47 @@ class FooterMaterial {
             ${simplexNoise}
 
             void main() {
-    // Convert UV to world space coordinates
-    vec2 worldPos = (vUv - 0.5) * uQuadSize;
-    
-    vec2 containerCenterUV = vec2(uContainerCenter.x, 1.0 - uContainerCenter.y);
-    vec2 containerWorldCenter = (containerCenterUV - 0.5) * uQuadSize;
-    
-    vec2 distanceVec = worldPos - containerWorldCenter;
-    float distanceFromCenter = length(distanceVec);
-    
-    // Add noise with seed offset
-    vec2 squareUv = vUv;
-    float aspect = uQuadSize.x / uQuadSize.y;
-    
-    if (aspect > 1.0) {
-        squareUv.x = (vUv.x - 0.5) * aspect + 0.5;
-    } else {
-        squareUv.y = (vUv.y - 0.5) / aspect + 0.5;
-    }
-    
-    float scale = 4.0;
-    vec3 coord = vec3(squareUv * scale + uSeed * 100.0, uTime * 0.1 + uSeed * 50.0);
-    float n = snoise(coord);
-    float noiseStrength = 0.15;
-    
-    // Max radius is half the smaller dimension of the container
-    float maxRadius = min(uContainerSize.x, uContainerSize.y) * 0.5;
-    float currentRadius = uProgress * maxRadius;
-    float modulatedRadius = currentRadius + n * noiseStrength;
-    
-    // Alpha based on distance from container center
-    float alpha = step(distanceFromCenter, modulatedRadius);
-    alpha = 1.0 - alpha;
-    gl_FragColor = vec4(uColor, alpha);
-}
+				// Convert UV to world space coordinates
+				vec2 worldPos = (vUv - 0.5) * uQuadSize;
+				
+				vec2 containerCenterUV = vec2(uContainerCenter.x, 1.0 - uContainerCenter.y);
+				vec2 containerWorldCenter = (containerCenterUV - 0.5) * uQuadSize;
+				
+				vec2 distanceVec = worldPos - containerWorldCenter;
+				
+				// Make it oval by scaling the distance differently on each axis
+				// Adjust these values to control the oval shape
+				float ovalScaleX = 1.0; // Horizontal stretch
+				float ovalScaleY = 2.0; // Vertical compression (< 1.0 makes it wider, > 1.0 makes it taller)
+				
+				vec2 scaledDistance = distanceVec * vec2(ovalScaleX, ovalScaleY);
+				float distanceFromCenter = length(scaledDistance);
+				
+				// Add noise with seed offset
+				vec2 squareUv = vUv;
+				float aspect = uQuadSize.x / uQuadSize.y;
+				
+				if (aspect > 1.0) {
+					squareUv.x = (vUv.x - 0.5) * aspect + 0.5;
+				} else {
+					squareUv.y = (vUv.y - 0.5) / aspect + 0.5;
+				}
+				
+				float scale = 3.0;
+				vec3 coord = vec3(squareUv * scale + uSeed * 100.0, uTime * 0.1 + uSeed * 50.0);
+				float n = snoise(coord);
+				float noiseStrength = 0.15;
+				
+				// Max radius is half the smaller dimension of the container
+				float maxRadius = min(uContainerSize.x, uContainerSize.y) * 0.5;
+				float currentRadius = uProgress * maxRadius;
+				float modulatedRadius = currentRadius + n * noiseStrength;
+				
+				// Alpha based on distance from container center
+				float alpha = step(distanceFromCenter, modulatedRadius);
+				alpha = 1.0 - alpha;
+				gl_FragColor = vec4(uColor, alpha);
+			}
         `
 		return new THREE.ShaderMaterial({
 			uniforms: this.uniforms,

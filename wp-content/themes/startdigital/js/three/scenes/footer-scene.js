@@ -1,5 +1,3 @@
-import * as THREE from 'three'
-import gsap from 'gsap'
 import BaseScene from '../base-scene'
 import TrackedPlane from '../utils/tracked-plane'
 import FooterMaterial from '../materials/footer-material'
