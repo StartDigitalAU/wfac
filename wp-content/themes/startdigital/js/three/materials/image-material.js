@@ -37,7 +37,7 @@ class ImageMaterial {
 				float limitedSpeed = clamp(uSpeed, -0.5, 0.5); // Clamp between -2 and 2
 				
 				position.x = position.x - sin(uv.y * PI) * -1.0 * limitedSpeed;
-				position.z = position.z - 1.5 * abs(limitedSpeed);
+				position.z = position.z - 1.0 * abs(limitedSpeed);
 				return position;
 			}
 

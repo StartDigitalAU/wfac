@@ -9,6 +9,7 @@ export class LinkSlider extends Core {
 
 		this.container = container
 		this.autoplayInterval = null
+		this.autoplayIntervalDuration = null
 		this.isHovered = false
 		this.autoScrollSpeed = 0
 
@@ -27,6 +28,7 @@ export class LinkSlider extends Core {
 		this.#handleLinks()
 		this.#setupArrows(config.arrows)
 		this.#setupAutoplay(config.autoplay)
+		this.#setupDragReset()
 	}
 
 	update() {
@@ -112,7 +114,10 @@ export class LinkSlider extends Core {
 				typeof prev === 'string' ? this.container.querySelector(prev) : prev
 
 			if (prevButton) {
-				prevButton.onclick = () => this.goToPrev()
+				prevButton.onclick = () => {
+					this.goToPrev()
+					this.resetAutoplay()
+				}
 			}
 		}
 
@@ -121,8 +126,32 @@ export class LinkSlider extends Core {
 				typeof next === 'string' ? this.container.querySelector(next) : next
 
 			if (nextButton) {
-				nextButton.onclick = () => this.goToNext()
+				nextButton.onclick = () => {
+					this.goToNext()
+					this.resetAutoplay()
+				}
 			}
+		}
+	}
+
+	#setupDragReset() {
+		// Reset autoplay when user starts dragging
+		const originalOnPointerDown = this.onPointerDown?.bind(this)
+		if (originalOnPointerDown) {
+			this.onPointerDown = (...args) => {
+				originalOnPointerDown(...args)
+				this.resetAutoplay()
+			}
+		}
+
+		// Alternative: listen for drag start on the wrapper
+		if (this.wrapper) {
+			this.wrapper.addEventListener('mousedown', () => {
+				this.resetAutoplay()
+			})
+			this.wrapper.addEventListener('touchstart', () => {
+				this.resetAutoplay()
+			})
 		}
 	}
 
@@ -133,6 +162,8 @@ export class LinkSlider extends Core {
 			typeof autoplayConfig === 'object'
 				? autoplayConfig
 				: { interval: autoplayConfig }
+
+		this.autoplayIntervalDuration = interval
 
 		// Pause on hover
 		if (pauseOnHover) {
@@ -152,6 +183,12 @@ export class LinkSlider extends Core {
 		if (this.autoplayInterval) {
 			clearInterval(this.autoplayInterval)
 			this.autoplayInterval = null
+		}
+	}
+
+	resetAutoplay() {
+		if (this.autoplayIntervalDuration) {
+			this.startAutoplay(this.autoplayIntervalDuration)
 		}
 	}
 
@@ -217,7 +254,7 @@ export class LinkSlider extends Core {
 
 		gsap.to(this, {
 			target: nextTarget,
-			duration: 0.55,
+			duration: 0.35,
 			ease: 'power1.inOut',
 			onUpdate: () => {
 				const deltaTarget = this.target - (this._prevTarget || this.target)
@@ -244,7 +281,7 @@ export class LinkSlider extends Core {
 
 		gsap.to(this, {
 			target: prevTarget,
-			duration: 0.55,
+			duration: 0.35,
 			ease: 'power1.inOut',
 			onUpdate: () => {
 				const deltaTarget = this.target - (this._prevTarget || this.target)
