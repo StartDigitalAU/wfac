@@ -14,7 +14,7 @@
 					{{ item.label }}
 				</a>
 			{% else %}
-				<button {{ item.filter == activeFilter ? 'disabled' : '' }} data-home-filter="{{ item.filter }}" class="is-h4 {{ item.filter == activeFilter ? 'text-wfac-accent-red' : 'text-wfac-cream opacity-70 hover:opacity-100 duration-300 ease-in-out' }} w-fit">
+				<button {{ item.filter == activeFilter ? 'disabled' : '' }} data-home-filter="{{ item.filter }}" class="is-h4 w-fit text-wfac-cream opacity-70 hover:opacity-100 duration-300 ease-in-out [&.active]:text-wfac-accent-red [&.active]:opacity-100 {{ item.filter == activeFilter ? 'active' : '' }}">
 					{{ item.label }}
 				</button>
 			{% endif %}
@@ -32,8 +32,11 @@
 	<div class="container flex flex-row gap-12 relative z-20 bg-wfac-dark-red">
 		<div class="absolute bottom-full left-0 w-full h-[25lvh] bg-gradient-to-t from-wfac-dark-red to-wfac-dark-red/0"></div>
 		{{ _self.filterNav(filterItems, 'featured') }}
-		{% include "home/on-now-grid.twig" with { courses: post.on_now.featured } %}
-		{% include "home/on-now-grid.twig" with { courses: get_exhibitions(8) } %}
-		{% include "home/on-now-grid.twig" with { courses: get_art_classes(8) } %}
+		<div class="flex flex-col w-full">
+			{% include "home/on-now-grid.twig" with { courses: post.on_now.featured, filter: 'featured', active: true } %}
+			{% include "home/on-now-grid.twig" with { courses: get_exhibitions(8), filter: 'exhibition' } %}
+			{% include "home/on-now-grid.twig" with { courses: get_art_classes(8), filter: 'art-classes' } %}
+			{% include "home/on-now-grid.twig" with { courses: get_events(8), filter: 'events' } %}
+		</div>
 	</div>
 </section>

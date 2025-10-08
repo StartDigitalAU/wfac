@@ -42,7 +42,6 @@ class GeneralHookProvider extends HookProvider
         // Disable Gravity Forms theme CSS
         $this->addFilter('gform_disable_form_theme_css', [$this->configurationService, 'disableGravityFormsCSS']);
 
-        // Optional: Disable admin bar (commented out in original)
         // $this->addFilter('show_admin_bar', [$this->configurationService, 'disableAdminBar']);
     }
 }

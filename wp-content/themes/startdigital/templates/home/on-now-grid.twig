@@ -1,4 +1,4 @@
-<div data-mouse="Get Info" class="post-tease-container grid grid-cols-6 gap-8 w-full">
+<div data-mouse="Get Info" data-home-filter="{{ filter }}" class="{{ active ? 'grid' : 'hidden' }} post-tease-container grid-cols-6 gap-8 w-full">
 	{% for course in courses %}
 		{% include "partials/teases/courses-tease.twig" with { course: course, class: loop.index <= 2 ? 'top-teases' : 'bottom-teases'  } %}
 	{% endfor %}

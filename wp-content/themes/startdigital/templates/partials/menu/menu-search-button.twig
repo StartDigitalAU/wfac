@@ -1,0 +1,29 @@
+<button type="submit" class="button button-animation group px-6 !pr-4 !py-3">
+	<div class="relative z-20 flex flex-row items-center gap-2 overflow-hidden">
+		<div class="pt-1 group-hover:-translate-y-full duration-500 ease-in-out">
+			<span class=" !text-wfac-dark-red duration-300 delay-150 ease-in-out">
+				Search
+			</span>
+			<span class="absolute top-[calc(100%+4px)] left-0 !text-wfac-dark-red duration-300 delay-150 ease-in-out">
+				Search
+			</span>
+		</div>
+		{% include "icons/search.twig" with { class: '-mt-0.5 size-7 !text-wfac-dark-red duration-300 delay-150 ease-in-out' } %}
+	</div>
+
+	<svg class="absolute inset-0 w-0 h-0">
+		<defs>
+			<filter id="goo-effect">
+				<feGaussianBlur in="SourceGraphic" stddeviation="10" result="blur"/>
+				<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo"/>
+				<feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+			</filter>
+		</defs>
+	</svg>
+	<div class="absolute inset-0 h-full w-full" style="filter: url(#goo-effect);">
+		<div class="absolute inset-0 h-full w-full rounded-full overflow-hidden ">
+			<div class="button__bg !top-1/2 !left-1/2 !-translate-x-1/2 !-translate-y-1/2 !w-[200%]"></div>
+		</div>
+		<div class="button__circle absolute inset-0"></div>
+	</div>
+</button>

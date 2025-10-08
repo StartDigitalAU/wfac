@@ -1,0 +1,12 @@
+<div class="container fixed top-0 left-0 z-50 pt-20 pointer-events-none">
+	<div data-search-inner class="rounded-3xl flex flex-col gap-12 p-8 opacity-0 pointer-events-none">
+		<button data-search-animate data-toggle-search class="self-end">{% include "icons/cross.twig" with { class: 'size-5 text-wfac-cream' }  %}</button>
+		<form class="flex flex-col gap-12 items-center py-24" action="{{ site.url }}" method="get" role="search">
+			<label for="search-input" class="sr-only">Search</label>
+			<input data-search-animate class="is-h1 text-wfac-accent-red bg-transparent text-center w-full placeholder:text-wfac-accent-red/50 focus:ring-0 focus:border-0 focus:outline-none" type="text" id="search-input" name="s" value="{{ search_query }}" placeholder="Type Here">
+			<div data-search-animate>
+				{% include "partials/menu/menu-search-button.twig" %}
+			</div>
+		</form>
+	</div>
+</div>

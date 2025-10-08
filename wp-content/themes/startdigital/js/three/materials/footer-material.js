@@ -140,17 +140,6 @@ class FooterMaterial {
 		const containerWidthInPlane = relativeWidth * planeWidth
 		const containerHeightInPlane = relativeHeight * planeHeight
 
-		console.log('Container bounds:', {
-			centerX,
-			centerY,
-			containerWidthInPlane,
-			containerHeightInPlane,
-			planeWidth,
-			planeHeight,
-			relativeWidth,
-			relativeHeight,
-		})
-
 		this.setContainerBounds(
 			containerWidthInPlane,
 			containerHeightInPlane,

@@ -1,0 +1,23 @@
+<div class="container fixed top-0 left-0 z-50 pt-20 pointer-events-none">
+	<nav data-menu-inner class=" rounded-3xl flex flex-col gap-12 p-8 pb-12 pointer-events-none opacity-0">
+		<ul class="flex flex-col gap-4 menu-top">
+			{% for item in top_menu.get_items() %}
+				<li class="menu-animate">
+					<a href="{{ item.link }}" class="is-h2 text-wfac-white py-2 flex hover:bg-wfac-deep-red ease-fancy duration-400 rounded-xl hover:px-6 flex-row items-center justify-between hover:text-wfac-dark-red">
+						<span class="pt-4">
+							{{ item.title }}
+						</span>
+						{% include "icons/arrow.twig" with { class: 'size-12' } %}
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+		<div class="flex flex-row gap-16 justify-between menu-below pr-16 max-w-[1600px]">
+			{% include "partials/menu/menu-sub-menu.twig" with { title: 'Program', menu: program_menu  } %}
+			{% include "partials/menu/menu-sub-menu.twig" with { title: 'Art Classes', menu: art_classes_menu  } %}
+			{% include "partials/menu/menu-sub-menu.twig" with { title: 'Visit', menu: visit_menu  } %}
+			{% include "partials/menu/menu-sub-menu.twig" with { title: 'Engage', menu: program_menu  } %}
+			{% include "partials/menu/menu-sub-menu.twig" with { title: 'About', menu: about_menu  } %}
+		</div>
+	</nav>
+</div>

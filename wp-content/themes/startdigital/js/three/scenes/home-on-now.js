@@ -1,15 +1,25 @@
-import * as THREE from 'three'
 import gsap from 'gsap'
 import BaseScene from '../base-scene'
 import TrackedPlane from '../utils/tracked-plane'
+import HomeGridFilter from '../../components/filters/home-grid-filter'
 
 class HomeOnNowScene extends BaseScene {
 	setupScene() {
-		this.imageContainers = document.querySelectorAll(
-			'#home-on-now .image-container'
+		const visibleGrids = document.querySelectorAll(
+			'#home-on-now .post-tease-container'
 		)
 
-		this.articleContainers = document.querySelectorAll('#home-on-now article')
+		this.imageContainers = []
+		this.articleContainers = []
+
+		visibleGrids.forEach((grid) => {
+			const gridImages = grid.querySelectorAll('.image-container')
+			const gridArticles = grid.querySelectorAll('article')
+
+			this.imageContainers.push(...gridImages)
+			this.articleContainers.push(...gridArticles)
+		})
+
 		this.hoverAnimations = []
 	}
 
@@ -27,6 +37,9 @@ class HomeOnNowScene extends BaseScene {
 			this.trackedPlanes.push(imagePlane)
 			this.imageMaterials.push(imagePlane.getImageMaterial())
 		})
+
+		// To filter the home screen
+		this.homeGridFilter = new HomeGridFilter(this)
 	}
 
 	createMouseListeners() {
@@ -34,6 +47,9 @@ class HomeOnNowScene extends BaseScene {
 			const imageMaterial = this.imageMaterials[index]
 
 			articleContainer.addEventListener('mouseenter', () => {
+				// Dont allow hover animations if the grid is filtering
+				if (this.homeGridFilter.getIsAnimating()) return
+
 				this.updateImageProgress(imageMaterial, true)
 			})
 

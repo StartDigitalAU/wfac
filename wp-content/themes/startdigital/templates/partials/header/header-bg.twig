@@ -1,0 +1,17 @@
+<svg class="absolute inset-0 w-0 h-0">
+	<defs>
+		<filter id="goo-effect">
+			<feGaussianBlur in="SourceGraphic" stddeviation="5" result="blur"/>
+			<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo"/>
+			<feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+		</filter>
+	</defs>
+</svg>
+<div class="absolute inset-0 h-full w-full" style="filter: url(#goo-effect);">
+	<div class="absolute inset-0 h-full w-full rounded-full overflow-hidden">
+		<div class="header__bg"></div>
+	</div>
+	<div class="header__circle absolute inset-0"></div>
+	<div data-menu-bg class="absolute top-0 left-0 w-full h-full rounded-[32px] bg-wfac-white"></div>
+	<div data-search-bg class="absolute top-0 left-0 w-full h-full rounded-[32px] bg-wfac-white"></div>
+</div>

@@ -3,6 +3,7 @@
 @import 'tailwindcss/utilities';
 @import './typography.css';
 @import './animations.css';
+@import './header.css';
 @import './buttons.css';
 @import './sliders.css';
 @import './accordion.css';

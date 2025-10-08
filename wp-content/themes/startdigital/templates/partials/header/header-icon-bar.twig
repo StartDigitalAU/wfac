@@ -1,0 +1,9 @@
+<div class="justify-self-end pr-2 text-wfac-dark-red flex flex-row items-center gap-6 relative z-10">
+	<button data-toggle-search>{% include "icons/search.twig" with { class: 'size-7' } %}</button>
+	<a href="/my-account">{% include "icons/user.twig" with { class: 'size-7' } %}</a>
+	<button data-toggle-menu class="flex flex-col items-center gap-[5.5px]">
+		{% for _ in 1..3 %}
+			<span class="menu-line origin-center w-[25px] h-[2px] bg-wfac-dark-red rounded-full"></span>
+		{% endfor %}
+	</button>
+</div>

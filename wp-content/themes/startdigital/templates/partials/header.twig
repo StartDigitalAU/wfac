@@ -1,12 +1,14 @@
-<header	class="fixed top-0 z-50 w-full py-4">
-	<div	data-navigation	class="container  relative">
-		<div	class="bg-wfac-white w-full flex items-center justify-between rounded-full p-2 px-6">
-			<a	href="{{ site.url }}"	rel="home">
-				{% include 'icons/logo.twig' with { class: 'h-9' } %}
+<header class="fixed top-0 z-50 w-full py-4">
+	<div data-navigation class="container  relative">
+		<div data-header-inner class="w-full grid grid-cols-3 items-center justify-between rounded-full p-3 px-6 relative header-animation">
+			<a href="{{ site.url }}" class="w-fit relative z-10" rel="home">
+				{% include 'icons/logo.twig' with { class: 'h-9 text-wfac-dark-red' } %}
 			</a>
-			<button	data-toggle-menu	class="lg:hidden ml-auto">
-				{{ include('templates/icons/hamburger.twig') }}
-			</button>
+			{% include "partials/header/header-nav.twig" %}
+			{% include "partials/header/header-icon-bar.twig" %}
+			{% include "partials/header/header-bg.twig" %}
 		</div>
 	</div>
 </header>
+{% include "partials/menu/menu.twig" %}
+{% include "partials/menu/menu-search.twig" %}

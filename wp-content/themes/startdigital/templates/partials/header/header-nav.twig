@@ -1,0 +1,9 @@
+<nav class="relative z-10">
+	<ul class="flex flex-row items-center gap-8 w-full justify-center">
+		{% for item in top_menu.get_items() %}
+			<li class="font-heading text-base text-wfac-dark-red pt-0.5">
+				<a href="{{ item.link }}" class="footer-menu-item before:-bottom-0.5">{{ item.title }}</a>
+			</li>
+		{% endfor %}
+	</ul>
+</nav>

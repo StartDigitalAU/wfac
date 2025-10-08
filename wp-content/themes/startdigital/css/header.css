@@ -1,0 +1,7 @@
+.header__bg {
+	@apply absolute top-0 left-0 w-full h-full aspect-square rounded-full bg-wfac-white pointer-events-none;
+}
+
+.header__circle {
+	@apply h-0 aspect-square rounded-full absolute top-0 left-0 bg-wfac-white pointer-events-none;
+}

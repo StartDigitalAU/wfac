@@ -20,7 +20,8 @@ class Context
             $context['options'] = get_fields('options');
         }
 
-        $context['menu'] = Timber::get_menu();
+        // Main Menu Items
+        $context['top_menu'] = Timber::get_menu('Top Menu');
 
         //Footer Menu Items
         $context['footer_bottom_menu'] = Timber::get_menu('Footer Bottom Menu');
@@ -64,6 +65,11 @@ class Context
         $functions['get_art_classes'] = array(
             'callable' => array($this, 'get_art_classes')
         );
+
+        $functions['get_events'] = array(
+            'callable' => array($this, 'get_events')
+        );
+
 
         return $functions;
     }
@@ -133,7 +139,7 @@ class Context
     {
 
         // An exhibition is a whats on post type with
-        // either a exhibition_tag or exhibition_category
+        // an exhibition_tag
         $args = array(
             'post_type' => 'whatson',
             'posts_per_page' => $limit,
@@ -145,10 +151,6 @@ class Context
                     'taxonomy' => 'exhibition_tag',
                     'operator' => 'EXISTS'
                 ),
-                array(
-                    'taxonomy' => 'exhibition_category',
-                    'operator' => 'EXISTS'
-                )
             )
         );
 
@@ -163,6 +165,31 @@ class Context
             'posts_per_page' => $limit,
             'orderby' => 'date',
             'order' => 'DESC',
+        );
+
+        return Timber::get_posts($args);
+    }
+
+    public function get_events($limit = -1)
+    {
+        // An event is a whatson post type with
+        // either an event tag or event category
+        $args = array(
+            'post_type' => 'whatson',
+            'posts_per_page' => $limit,
+            'orderby' => 'date',
+            'order' => 'DESC',
+            'tax_query' => array(
+                'relation' => 'OR',
+                array(
+                    'taxonomy' => 'event_tag',
+                    'operator' => 'EXISTS'
+                ),
+                array(
+                    'taxonomy' => 'event_category',
+                    'operator' => 'EXISTS'
+                )
+            )
         );
 
         return Timber::get_posts($args);

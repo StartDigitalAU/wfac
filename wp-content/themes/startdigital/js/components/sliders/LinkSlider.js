@@ -1,6 +1,6 @@
 import Core from 'smooothy'
 import gsap from 'gsap'
-import { damp } from 'smooothy' // Import the damp utility
+import { damp } from 'smooothy'
 
 export class LinkSlider extends Core {
 	constructor(container, config = {}) {
@@ -19,8 +19,8 @@ export class LinkSlider extends Core {
 		this.lagPositions = new Array(this.lagElements.length).fill(0)
 
 		this.lagConfig = {
-			speedMultiplier: 60,
-			dampingFactor: 6.0,
+			speedMultiplier: 120,
+			dampingFactor: 5.0,
 			...config.lag,
 		}
 
@@ -57,6 +57,28 @@ export class LinkSlider extends Core {
 			)
 			element.style.transform = `translateX(${this.lagPositions[i]}px)`
 		})
+	}
+
+	#getVisibleItemsCount() {
+		if (!this.wrapper || !this.items.length) return 1
+
+		const wrapperWidth = window.innerWidth
+		let visibleWidth = 0
+		let count = 0
+
+		// Calculate how many items fit in the wrapper width
+		for (let i = 0; i < this.items.length; i++) {
+			const itemWidth = this.items[i].offsetWidth
+			visibleWidth += itemWidth
+
+			if (visibleWidth <= wrapperWidth) {
+				count++
+			} else {
+				break
+			}
+		}
+
+		return Math.max(1, count)
 	}
 
 	setAutoScrollSpeed(speed) {
@@ -173,16 +195,25 @@ export class LinkSlider extends Core {
 		if (this.isAnimating) return
 
 		this.isAnimating = true
+		const visibleCount = this.#getVisibleItemsCount()
 		const nextTarget = this.config.infinite
-			? Math.round(this.target - 1)
-			: Math.max(this.maxScroll, Math.round(this.target - 1))
+			? Math.round(this.target - visibleCount)
+			: Math.max(this.maxScroll, Math.round(this.target - visibleCount))
+
+		const distance = nextTarget - this.target
 
 		gsap.to(this, {
 			target: nextTarget,
 			duration: 0.55,
 			ease: 'power1.inOut',
+			onUpdate: () => {
+				const deltaTarget = this.target - (this._prevTarget || this.target)
+				this.speed = -deltaTarget * 10
+				this._prevTarget = this.target
+			},
 			onComplete: () => {
 				this.isAnimating = false
+				this._prevTarget = undefined
 			},
 		})
 	}
@@ -191,16 +222,25 @@ export class LinkSlider extends Core {
 		if (this.isAnimating) return
 
 		this.isAnimating = true
+		const visibleCount = this.#getVisibleItemsCount()
 		const prevTarget = this.config.infinite
-			? Math.round(this.target + 1)
-			: Math.min(0, Math.round(this.target + 1))
+			? Math.round(this.target + visibleCount)
+			: Math.min(0, Math.round(this.target + visibleCount))
+
+		const distance = prevTarget - this.target
 
 		gsap.to(this, {
 			target: prevTarget,
 			duration: 0.55,
 			ease: 'power1.inOut',
+			onUpdate: () => {
+				const deltaTarget = this.target - (this._prevTarget || this.target)
+				this.speed = -deltaTarget * 10
+				this._prevTarget = this.target
+			},
 			onComplete: () => {
 				this.isAnimating = false
+				this._prevTarget = undefined
 			},
 		})
 	}
