@@ -42,6 +42,9 @@ class GeneralHookProvider extends HookProvider
         // Disable Gravity Forms theme CSS
         $this->addFilter('gform_disable_form_theme_css', [$this->configurationService, 'disableGravityFormsCSS']);
 
+        // Load images externally because the media library is HUGE
+        $this->addFilter('upload_dir', [$this->configurationService, 'loadImagesExternally']);
+
         // $this->addFilter('show_admin_bar', [$this->configurationService, 'disableAdminBar']);
     }
 }

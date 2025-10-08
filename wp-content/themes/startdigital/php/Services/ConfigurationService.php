@@ -122,4 +122,19 @@ class ConfigurationService
     {
         return true;
     }
+
+
+    public function loadImagesExternally($dirs)
+    {
+        $hosts = [
+            'wfac.test',
+            'staging.wfac.org.au'
+        ];
+
+        if (in_array($_SERVER['HTTP_HOST'], $hosts)) {
+            $dirs['baseurl'] = 'https://wfac.org.au/wp-content/uploads';
+            $dirs['url']     = $dirs['baseurl'] . $dirs['subdir'];
+        }
+        return $dirs;
+    }
 }
