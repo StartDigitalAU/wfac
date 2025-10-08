@@ -6,6 +6,7 @@ export default function initSmoothScrolling() {
 	lenis = new Lenis({
 		lerp: 0.15,
 		autoRaf: true,
+		syncTouch: true,
 	})
 }
 

@@ -9,27 +9,43 @@ class ImageMaterial {
 			uTextureSize: new THREE.Vector2(0.0, 0.0),
 			uQuadSize: new THREE.Vector2(0.0, 0.0),
 			uTime: 0.0,
+			uSpeed: 0,
 			uProgress: 0.3,
 		}
 
 		this.options = { ...defaults, ...options }
 		this.material = this.createMaterial()
+		this.targetSpeed = this.options.uSpeed
+		this.lerpFactor = 0.05
 	}
 
 	createMaterial() {
 		const vertexShader = /* glsl */ `
+
+			float PI = 3.141592653589793;
+
 			uniform vec2 uTextureSize;
 			uniform vec2 uQuadSize;
+			uniform float uSpeed;
 			varying vec2 vUvCover;
 			varying vec2 vUv;
 			
 
 			${uvCoverVert}
 
+			vec3 deformationCurve(vec3 position, vec2 uv) {
+				float limitedSpeed = clamp(uSpeed, -0.5, 0.5); // Clamp between -2 and 2
+				
+				position.x = position.x - sin(uv.y * PI) * -1.0 * limitedSpeed;
+				position.z = position.z - 1.5 * abs(limitedSpeed);
+				return position;
+			}
+
 			void main() {
 				vUvCover = getCoverUvVert(uv, uTextureSize, uQuadSize);
 				vUv = uv;
-				gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+				vec3 deformedPosition = deformationCurve(position, vUvCover);
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(deformedPosition, 1.0);
 			}
 		`
 
@@ -84,12 +100,14 @@ class ImageMaterial {
 				uTextureSize: { value: this.options.uTextureSize },
 				uQuadSize: { value: this.options.uQuadSize },
 				uTime: { value: this.options.uTime },
+				uSpeed: { value: this.options.uSpeed },
 				uProgress: { value: this.options.uProgress },
 			},
 			vertexShader,
 			fragmentShader,
 			transparent: true,
 			depthWrite: false,
+			depthTest: false,
 		})
 	}
 
@@ -99,6 +117,18 @@ class ImageMaterial {
 
 	updateTime(time) {
 		this.material.uniforms.uTime.value = time
+	}
+
+	updateSpeed(speed) {
+		this.targetSpeed = speed
+	}
+
+	updateLerp() {
+		this.material.uniforms.uSpeed.value = THREE.MathUtils.lerp(
+			this.material.uniforms.uSpeed.value,
+			this.targetSpeed,
+			this.lerpFactor
+		)
 	}
 
 	updateProgress(progress) {

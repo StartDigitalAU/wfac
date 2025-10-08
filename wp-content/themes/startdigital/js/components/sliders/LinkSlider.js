@@ -35,7 +35,7 @@ export class LinkSlider extends Core {
 		}
 
 		super.update()
-		this.#applyLagEffect()
+		// this.#applyLagEffect()
 	}
 
 	#applyLagEffect() {
@@ -87,6 +87,19 @@ export class LinkSlider extends Core {
 
 	stopAutoScroll() {
 		this.autoScrollSpeed = 0
+	}
+
+	getCurrentSpeed() {
+		return this.speed || 0
+	}
+
+	getAbsoluteSpeed() {
+		return Math.abs(this.speed || 0)
+	}
+
+	getSpeedDirection() {
+		const speed = this.speed || 0
+		return speed > 0 ? 1 : speed < 0 ? -1 : 0
 	}
 
 	#setupArrows(arrowsConfig) {
@@ -208,7 +221,7 @@ export class LinkSlider extends Core {
 			ease: 'power1.inOut',
 			onUpdate: () => {
 				const deltaTarget = this.target - (this._prevTarget || this.target)
-				this.speed = -deltaTarget * 10
+				this.speed = deltaTarget * 10
 				this._prevTarget = this.target
 			},
 			onComplete: () => {
@@ -235,7 +248,7 @@ export class LinkSlider extends Core {
 			ease: 'power1.inOut',
 			onUpdate: () => {
 				const deltaTarget = this.target - (this._prevTarget || this.target)
-				this.speed = -deltaTarget * 10
+				this.speed = deltaTarget * 10
 				this._prevTarget = this.target
 			},
 			onComplete: () => {

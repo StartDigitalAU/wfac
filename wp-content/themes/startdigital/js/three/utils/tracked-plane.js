@@ -39,23 +39,92 @@ class TrackedPlane {
 
 	createRoundedRectGeometry(width, height) {
 		const radius = Math.min(width, height) * this.config.borderRadius
-
-		const shape = new Shape()
-		const x = -width / 2
-		const y = -height / 2
 		const r = Math.min(radius, Math.min(width, height) / 2)
 
-		shape.moveTo(x, y + r)
-		shape.lineTo(x, y + height - r)
-		shape.quadraticCurveTo(x, y + height, x + r, y + height)
-		shape.lineTo(x + width - r, y + height)
-		shape.quadraticCurveTo(x + width, y + height, x + width, y + height - r)
-		shape.lineTo(x + width, y + r)
-		shape.quadraticCurveTo(x + width, y, x + width - r, y)
-		shape.lineTo(x + r, y)
-		shape.quadraticCurveTo(x, y, x, y + r)
+		// Create a highly subdivided plane
+		const segmentsX = Math.max(50, Math.floor(width * 20))
+		const segmentsY = Math.max(50, Math.floor(height * 20))
 
-		const geometry = new ShapeGeometry(shape, this.config.smoothness)
+		const geometry = new THREE.PlaneGeometry(
+			width,
+			height,
+			segmentsX,
+			segmentsY
+		)
+
+		// Get position attribute
+		const positions = geometry.attributes.position
+
+		// Define corner centers
+		const left = -width / 2
+		const right = width / 2
+		const bottom = -height / 2
+		const top = height / 2
+
+		// Adjust vertices in corner regions to follow the curve
+		for (let i = 0; i < positions.count; i++) {
+			const px = positions.getX(i)
+			const py = positions.getY(i)
+			const pz = positions.getZ(i)
+
+			let newPx = px
+			let newPy = py
+
+			// Bottom-left corner
+			if (px < left + r && py < bottom + r) {
+				const dx = px - (left + r)
+				const dy = py - (bottom + r)
+				const dist = Math.sqrt(dx * dx + dy * dy)
+
+				if (dist > r) {
+					// Project onto circle
+					const angle = Math.atan2(dy, dx)
+					newPx = left + r + Math.cos(angle) * r
+					newPy = bottom + r + Math.sin(angle) * r
+				}
+			}
+			// Bottom-right corner
+			else if (px > right - r && py < bottom + r) {
+				const dx = px - (right - r)
+				const dy = py - (bottom + r)
+				const dist = Math.sqrt(dx * dx + dy * dy)
+
+				if (dist > r) {
+					const angle = Math.atan2(dy, dx)
+					newPx = right - r + Math.cos(angle) * r
+					newPy = bottom + r + Math.sin(angle) * r
+				}
+			}
+			// Top-right corner
+			else if (px > right - r && py > top - r) {
+				const dx = px - (right - r)
+				const dy = py - (top - r)
+				const dist = Math.sqrt(dx * dx + dy * dy)
+
+				if (dist > r) {
+					const angle = Math.atan2(dy, dx)
+					newPx = right - r + Math.cos(angle) * r
+					newPy = top - r + Math.sin(angle) * r
+				}
+			}
+			// Top-left corner
+			else if (px < left + r && py > top - r) {
+				const dx = px - (left + r)
+				const dy = py - (top - r)
+				const dist = Math.sqrt(dx * dx + dy * dy)
+
+				if (dist > r) {
+					const angle = Math.atan2(dy, dx)
+					newPx = left + r + Math.cos(angle) * r
+					newPy = top - r + Math.sin(angle) * r
+				}
+			}
+
+			positions.setXY(i, newPx, newPy)
+		}
+
+		positions.needsUpdate = true
+
 		this.fixUVs(geometry, width, height)
 
 		return geometry

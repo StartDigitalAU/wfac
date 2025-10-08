@@ -7,6 +7,7 @@ import { LinkSlider } from '../../components/sliders/LinkSlider'
 
 class HomeShopScene extends BaseScene {
 	setupScene() {
+		this.speed = 0
 		this.heroContainer = document.querySelector('#home-shop')
 		this.imageContainers = document.querySelectorAll(
 			'#home-shop .image-container'
@@ -105,16 +106,23 @@ class HomeShopScene extends BaseScene {
 	}
 
 	updatePlanes() {
-		this.trackedPlanes.forEach((plane) => plane.updatePlane())
+		if (!this.trackedPlanes || !this.imageMaterials) return
+
+		this.speed = this.linkSlider.getCurrentSpeed()
+		this.trackedPlanes.forEach((plane, i) => {
+			plane.updatePlane()
+			this.imageMaterials[i].updateSpeed(this.speed)
+		})
 	}
 
 	animate(deltaTime) {
 		this.time += deltaTime
 		this.whiteNoiseMaterial.updateTime(this.time)
 
-		this.imageMaterials.forEach((imageMaterial) =>
+		this.imageMaterials.forEach((imageMaterial) => {
 			imageMaterial.updateTime(this.time)
-		)
+			imageMaterial.updateLerp()
+		})
 	}
 }
 
