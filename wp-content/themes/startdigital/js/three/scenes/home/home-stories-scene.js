@@ -1,43 +1,24 @@
 import * as THREE from 'three'
 import gsap from 'gsap'
-import BaseScene from '../base-scene'
-import TrackedPlane from '../utils/tracked-plane'
-import WhiteNoiseMaterial from '../materials/white-noise-material'
-import { LinkSlider } from '../../components/sliders/LinkSlider'
+import BaseScene from '../../base-scene'
+import TrackedPlane from '../../utils/tracked-plane'
+import { LinkSlider } from '../../../components/sliders/LinkSlider'
 
-class HomeShopScene extends BaseScene {
+class HomeStoriesScene extends BaseScene {
 	setupScene() {
 		this.speed = 0
-		this.heroContainer = document.querySelector('#home-shop')
 		this.imageContainers = document.querySelectorAll(
-			'#home-shop .image-container'
+			'#home-stories .image-container'
 		)
-		this.articleContainers = document.querySelectorAll('#home-shop article')
+		this.articleContainers = document.querySelectorAll('#home-stories article')
 		this.sliderContainer = document.querySelector(
-			'#home-shop [data-link-slider]'
+			'#home-stories [data-link-slider]'
 		)
 		this.hoverAnimations = []
 		this.createSlider()
 	}
 
-	createMaterials() {
-		this.whiteNoiseMaterial = new WhiteNoiseMaterial(1)
-	}
-
 	createObjects() {
-		this.heroPlane = new TrackedPlane(
-			this.scene,
-			this.camera,
-			this.heroContainer,
-			this.container,
-			{
-				material: this.whiteNoiseMaterial.getMaterial(),
-			}
-		)
-		const quadSize = this.heroPlane.getQuadSize()
-		this.whiteNoiseMaterial.setQuadSize(quadSize.x, quadSize.y)
-		this.whiteNoiseMaterial.setColor(new THREE.Vector3(0.306, 0.137, 0.133))
-
 		this.trackedPlanes = []
 		this.imageMaterials = []
 
@@ -100,6 +81,10 @@ class HomeShopScene extends BaseScene {
 				interval: 6000,
 				pauseOnHover: true,
 			},
+			arrows: {
+				prev: document.querySelector('#home-stories [data-prev]'),
+				next: document.querySelector('#home-stories [data-next]'),
+			},
 		}
 
 		this.linkSlider = new LinkSlider(this.sliderContainer, config)
@@ -122,7 +107,6 @@ class HomeShopScene extends BaseScene {
 
 	animate(deltaTime) {
 		this.time += deltaTime
-		this.whiteNoiseMaterial.updateTime(this.time)
 
 		this.imageMaterials.forEach((imageMaterial) => {
 			imageMaterial.updateTime(this.time)
@@ -131,4 +115,4 @@ class HomeShopScene extends BaseScene {
 	}
 }
 
-export default HomeShopScene
+export default HomeStoriesScene

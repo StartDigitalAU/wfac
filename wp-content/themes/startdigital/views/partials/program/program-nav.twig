@@ -1,8 +1,7 @@
 {% set nav_items = get_child_pages('program') %}
 {% set display_modes = ['grid', 'list', 'feed'] %}
-{% set current_display = function('get_query_var', 'display') ?: 'grid' %}
 
-<section class="text-wfac-dark-red pt-36">
+<section class="text-wfac-dark-red pt-36 pb-6">
 	<div class="container flex flex-col gap-8">
 		<div class="flex flex-row justify-between items-center gap-4">
 			<nav>
@@ -22,7 +21,7 @@
 		</div>
 		<div class="flex flex-row items-end justify-between gap-8">
 			<h1 class="is-display flex w-full">{{ post.title }}</h1>
-			<div class="flex flex-row gap-8 justify-end">
+			<div class="flex flex-row gap-8 justify-end pb-8">
 				{% for mode in display_modes %}
 					<a href="{{ post.link }}?display={{ mode }}" class="is-h6 duration-400 ease-fancy hover:opacity-100 {{ current_display == mode ? 'opacity-100' : 'opacity-50' }}">
 						{{ mode }}

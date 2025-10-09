@@ -5,13 +5,15 @@
  * Template Post Type: page
  */
 
-use Timber\Timber;
+use \Timber\Timber;
+
+use TheStart\Controllers\ProgramPageController;
 
 global $post;
 
-$context = Timber::context();
-$timberPost = Timber::get_post($post->ID);
-$context['post'] = $timberPost;
+$controller = new ProgramPageController($post);
+$context = $controller->get_context();
+
 $templates = array("templates/template-program.twig", 'page.twig');
 
 Timber::render($templates, $context);

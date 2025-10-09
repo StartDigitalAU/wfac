@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import BaseScene from '../base-scene'
-import TrackedPlane from '../utils/tracked-plane'
-import NoiseMaterial from '../materials/noise-material'
+import BaseScene from '../../base-scene'
+import TrackedPlane from '../../utils/tracked-plane'
+import NoiseMaterial from '../../materials/noise-material'
 
 gsap.registerPlugin(ScrollTrigger)
 

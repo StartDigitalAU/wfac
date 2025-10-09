@@ -1,6 +1,6 @@
-import BaseScene from '../base-scene'
-import TrackedPlane from '../utils/tracked-plane'
-import WhiteNoiseMaterial from '../materials/white-noise-material'
+import BaseScene from '../../base-scene'
+import TrackedPlane from '../../utils/tracked-plane'
+import WhiteNoiseMaterial from '../../materials/white-noise-material'
 
 class HomeArtClassesScene extends BaseScene {
 	setupScene() {

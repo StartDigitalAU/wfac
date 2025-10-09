@@ -1,27 +1,31 @@
-import * as THREE from 'three'
 import gsap from 'gsap'
-import BaseScene from '../base-scene'
-import TrackedPlane from '../utils/tracked-plane'
-import { LinkSlider } from '../../components/sliders/LinkSlider'
+import BaseScene from '../../base-scene'
+import TrackedPlane from '../../utils/tracked-plane'
+import HomeGridFilter from '../../../components/filters/home-grid-filter'
 
-class HomeStoriesScene extends BaseScene {
+class HomeOnNowScene extends BaseScene {
 	setupScene() {
-		this.speed = 0
-		this.imageContainers = document.querySelectorAll(
-			'#home-stories .image-container'
+		const visibleGrids = document.querySelectorAll(
+			'#home-on-now .post-tease-container'
 		)
-		this.articleContainers = document.querySelectorAll('#home-stories article')
-		this.sliderContainer = document.querySelector(
-			'#home-stories [data-link-slider]'
-		)
+
+		this.imageContainers = []
+		this.articleContainers = []
+
+		visibleGrids.forEach((grid) => {
+			const gridImages = grid.querySelectorAll('.image-container')
+			const gridArticles = grid.querySelectorAll('article')
+
+			this.imageContainers.push(...gridImages)
+			this.articleContainers.push(...gridArticles)
+		})
+
 		this.hoverAnimations = []
-		this.createSlider()
 	}
 
 	createObjects() {
 		this.trackedPlanes = []
 		this.imageMaterials = []
-
 		this.imageContainers.forEach((imageContainer) => {
 			const imagePlane = new TrackedPlane(
 				this.scene,
@@ -33,6 +37,9 @@ class HomeStoriesScene extends BaseScene {
 			this.trackedPlanes.push(imagePlane)
 			this.imageMaterials.push(imagePlane.getImageMaterial())
 		})
+
+		// To filter the home screen
+		this.homeGridFilter = new HomeGridFilter(this)
 	}
 
 	createMouseListeners() {
@@ -40,6 +47,9 @@ class HomeStoriesScene extends BaseScene {
 			const imageMaterial = this.imageMaterials[index]
 
 			articleContainer.addEventListener('mouseenter', () => {
+				// Dont allow hover animations if the grid is filtering
+				if (this.homeGridFilter.getIsAnimating()) return
+
 				this.updateImageProgress(imageMaterial, true)
 			})
 
@@ -57,6 +67,7 @@ class HomeStoriesScene extends BaseScene {
 		}
 
 		const currentProgress = imageMaterial.getMaterial().uniforms.uProgress.value
+
 		const targetProgress = isHovered ? 0.8 : 0.3
 
 		this.hoverAnimations[index] = gsap.to(
@@ -72,34 +83,6 @@ class HomeStoriesScene extends BaseScene {
 		)
 	}
 
-	createSlider() {
-		if (!this.sliderContainer) return
-
-		const config = {
-			onUpdate: () => this.updatePlanes(),
-			autoplay: {
-				interval: 6000,
-				pauseOnHover: true,
-			},
-			arrows: {
-				prev: document.querySelector('#home-stories [data-prev]'),
-				next: document.querySelector('#home-stories [data-next]'),
-			},
-		}
-
-		this.linkSlider = new LinkSlider(this.sliderContainer, config)
-	}
-
-	updatePlanes() {
-		if (!this.trackedPlanes || !this.imageMaterials) return
-
-		this.speed = this.linkSlider.getCurrentSpeed()
-		this.trackedPlanes.forEach((plane, i) => {
-			plane.updatePlane()
-			this.imageMaterials[i].updateSpeed(this.speed)
-		})
-	}
-
 	onResize(width, height) {
 		super.onResize(width, height)
 		this.trackedPlanes.forEach((plane) => plane.updatePlane())
@@ -108,11 +91,10 @@ class HomeStoriesScene extends BaseScene {
 	animate(deltaTime) {
 		this.time += deltaTime
 
-		this.imageMaterials.forEach((imageMaterial) => {
+		this.imageMaterials.forEach((imageMaterial) =>
 			imageMaterial.updateTime(this.time)
-			imageMaterial.updateLerp()
-		})
+		)
 	}
 }
 
-export default HomeStoriesScene
+export default HomeOnNowScene

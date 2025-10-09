@@ -49,7 +49,6 @@ class Context
             'get_events',
             'get_child_pages',
             'get_tutors_filtering',
-            'get_whats_on',
         ];
 
         foreach ($method_names as $method) {
@@ -218,17 +217,5 @@ class Context
         ]);
 
         return $tutors;
-    }
-
-    public function get_whats_on($limit)
-    {
-        $args = array(
-            'post_type' => array('whatson', 'product'),
-            'posts_per_page' => $limit,
-            'orderby' => 'date',
-            'order' => 'DESC',
-        );
-
-        return Timber::get_posts($args);
     }
 }

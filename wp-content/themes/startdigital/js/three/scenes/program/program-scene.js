@@ -1,13 +1,10 @@
 import gsap from 'gsap'
-import BaseScene from '../base-scene'
-import TrackedPlane from '../utils/tracked-plane'
-import HomeGridFilter from '../../components/filters/home-grid-filter'
+import BaseScene from '../../base-scene'
+import TrackedPlane from '../../utils/tracked-plane'
 
-class HomeOnNowScene extends BaseScene {
+class ProgramScene extends BaseScene {
 	setupScene() {
-		const visibleGrids = document.querySelectorAll(
-			'#home-on-now .post-tease-container'
-		)
+		const visibleGrids = document.querySelectorAll('.program-grid')
 
 		this.imageContainers = []
 		this.articleContainers = []
@@ -37,9 +34,6 @@ class HomeOnNowScene extends BaseScene {
 			this.trackedPlanes.push(imagePlane)
 			this.imageMaterials.push(imagePlane.getImageMaterial())
 		})
-
-		// To filter the home screen
-		this.homeGridFilter = new HomeGridFilter(this)
 	}
 
 	createMouseListeners() {
@@ -47,9 +41,6 @@ class HomeOnNowScene extends BaseScene {
 			const imageMaterial = this.imageMaterials[index]
 
 			articleContainer.addEventListener('mouseenter', () => {
-				// Dont allow hover animations if the grid is filtering
-				if (this.homeGridFilter.getIsAnimating()) return
-
 				this.updateImageProgress(imageMaterial, true)
 			})
 
@@ -97,4 +88,4 @@ class HomeOnNowScene extends BaseScene {
 	}
 }
 
-export default HomeOnNowScene
+export default ProgramScene

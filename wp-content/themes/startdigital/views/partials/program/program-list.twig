@@ -1,0 +1,7 @@
+<section class="pt-0">
+	<div class="container flex flex-col">
+		{% for program_post in program_posts %}
+			{% include "partials/teases/program-list-tease.twig" with { course: program_post, class: 'dark' } %}
+		{% endfor %}
+	</div>
+</section>

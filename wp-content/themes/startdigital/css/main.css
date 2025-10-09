@@ -10,6 +10,7 @@
 @import './sliders.css';
 @import './accordion.css';
 @import './forms.css';
+@import './tease.css';
 
 @layer components {
 	.container {
@@ -17,53 +18,9 @@
 	}
 }
 
-body.menu-open {
-	[data-menu] {
-		@apply translate-x-0;
-	}
-}
-
-[data-menu] {
-	@apply translate-x-full;
-}
-
 main {
 	section {
 		@apply relative py-24 lg:py-32 3xl:py-48;
-	}
-}
-
-.top-teases {
-	@apply col-span-full sm:col-span-3;
-
-	.image-container {
-		@apply aspect-[0.9];
-	}
-
-	h3 {
-		@apply is-h4 xl:text-[32px];
-	}
-}
-
-.bottom-teases {
-	@apply col-span-full sm:col-span-3 xl:col-span-2;
-
-	.image-container {
-		@apply aspect-[0.9] xl:aspect-3/4;
-	}
-
-	h3 {
-		@apply is-h4;
-	}
-}
-
-.class-category-grid {
-	article:nth-of-type(3n + 2) {
-		@apply sm:mt-[60%] lg:mt-[20%];
-	}
-
-	article:nth-of-type(3n + 3) {
-		@apply sm:-mt-[60%] lg:mt-0;
 	}
 }
 

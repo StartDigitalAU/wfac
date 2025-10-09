@@ -1,0 +1,7 @@
+<section data-mouse="Get Info" class="post-tease-container program-grid pt-0">
+	<div class="container grid grid-cols-4 gap-4 3xl:gap-6 gap-y-12 3xl:gap-y-16">
+		{% for program_post in program_posts %}
+			{% include "partials/teases/courses-tease.twig" with { course: program_post, class: 'dark' } %}
+		{% endfor %}
+	</div>
+</section>

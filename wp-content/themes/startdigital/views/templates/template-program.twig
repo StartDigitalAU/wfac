@@ -1,8 +1,17 @@
 {% extends "base.twig" %}
 {% block content %}
-	<div class="bg-wfac-cream">
+	{% set current_display = function('get_query_var', 'display') ?: 'grid' %}
+
+	{% include "partials/mouse-follower.twig" %}
+	<div id="program-archive" class="bg-wfac-cream">
 		{% include "partials/program/program-nav.twig" %}
-		{% include "partials/program/program-grid.twig" %}
+		{% if current_display == 'feed' %}
+			{% include "partials/program/program-feed.twig" %}
+		{% elseif current_display == 'list' %}
+			{% include "partials/program/program-list.twig" %}
+		{% else %}
+			{% include "partials/program/program-grid.twig" %}
+		{% endif %}
 	</div>
 	{% include "partials/program/program-filter.twig" %}
 {% endblock %}

@@ -1,7 +1,7 @@
-import BaseScene from '../base-scene'
-import TrackedPlane from '../utils/tracked-plane'
-import FooterMaterial from '../materials/footer-material'
-import { LinkSlider } from '../../components/sliders/LinkSlider'
+import BaseScene from '../../base-scene'
+import TrackedPlane from '../../utils/tracked-plane'
+import FooterMaterial from '../../materials/footer-material'
+import { LinkSlider } from '../../../components/sliders/LinkSlider'
 
 class FooterScene extends BaseScene {
 	setupScene() {
