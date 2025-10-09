@@ -15,7 +15,7 @@ class FooterScene extends BaseScene {
 	}
 
 	createObjects() {
-		this.heroPlane = new TrackedPlane(
+		this.footerPlane = new TrackedPlane(
 			this.scene,
 			this.camera,
 			this.footerContainer,
@@ -30,10 +30,10 @@ class FooterScene extends BaseScene {
 	}
 
 	updateContainerBounds() {
-		if (this.heroPlane && this.footerContainer) {
+		if (this.footerPlane && this.footerContainer) {
 			this.footerMaterial.setContainerFromElement(
 				this.footerContainer,
-				this.heroPlane
+				this.footerPlane
 			)
 		}
 	}
@@ -53,6 +53,7 @@ class FooterScene extends BaseScene {
 	onResize() {
 		super.onResize()
 		this.updateContainerBounds()
+		this.footerPlane.updatePlane()
 	}
 
 	animate(deltaTime) {

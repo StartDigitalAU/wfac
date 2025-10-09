@@ -265,7 +265,6 @@ class TrackedPlane {
 		this.lenis.on('scroll', () => {
 			this.updatePlane()
 		})
-		window.addEventListener('resize', this.updatePlane.bind(this))
 	}
 
 	enable() {
@@ -383,7 +382,6 @@ class TrackedPlane {
 		if (this.imageMaterial && this.imageMaterial.dispose) {
 			this.imageMaterial.dispose()
 		}
-		window.removeEventListener('resize', this.updatePlane.bind(this))
 	}
 }
 

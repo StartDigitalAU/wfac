@@ -4,6 +4,12 @@ import { damp } from 'smooothy'
 
 export class LinkSlider extends Core {
 	constructor(container, config = {}) {
+		if ('ontouchstart' in window) {
+			config.dragSensitivity = (config.dragSensitivity || 0.005) * 2
+		} else {
+			config.dragSensitivity = config.dragSensitivity || 0.0065
+		}
+
 		super(container.querySelector('[data-slider]'), config)
 		gsap.ticker.add(this.update.bind(this))
 
@@ -135,16 +141,6 @@ export class LinkSlider extends Core {
 	}
 
 	#setupDragReset() {
-		// Reset autoplay when user starts dragging
-		const originalOnPointerDown = this.onPointerDown?.bind(this)
-		if (originalOnPointerDown) {
-			this.onPointerDown = (...args) => {
-				originalOnPointerDown(...args)
-				this.resetAutoplay()
-			}
-		}
-
-		// Alternative: listen for drag start on the wrapper
 		if (this.wrapper) {
 			this.wrapper.addEventListener('mousedown', () => {
 				this.resetAutoplay()

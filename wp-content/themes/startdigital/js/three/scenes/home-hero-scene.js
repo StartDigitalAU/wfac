@@ -46,6 +46,7 @@ class HomeHeroScene extends BaseScene {
 		)
 
 		this.updateMaterialResolution()
+
 		// this.updateSvgBounds()
 	}
 
@@ -97,10 +98,15 @@ class HomeHeroScene extends BaseScene {
 			},
 			'<='
 		)
+	}
 
-		ScrollTrigger.addEventListener('refreshInit', () => {
+	onResize(width, height) {
+		super.onResize(width, height)
+		requestAnimationFrame(() => {
+			this.heroPlane.updatePlane()
 			this.updateMaterialResolution()
 			this.updateSvgBounds()
+			ScrollTrigger.refresh()
 		})
 	}
 

@@ -10,6 +10,7 @@ class SceneManager {
 		this.clock = new THREE.Clock()
 		this.isRunning = false
 		this.lenis = getLenis()
+		this.resizeTimeout = null
 		this.bindEvents()
 	}
 
@@ -69,7 +70,16 @@ class SceneManager {
 	}
 
 	handleResize() {
+		if (this.resizeTimeout) {
+			clearTimeout(this.resizeTimeout)
+		}
+
 		this.webglManager.resize()
+
+		this.resizeTimeout = setTimeout(() => {
+			this.webglManager.resize()
+			this.resizeTimeout = null
+		}, 100)
 	}
 
 	bindEvents() {
@@ -79,6 +89,11 @@ class SceneManager {
 	}
 
 	eventCleanup() {
+		// Clear any pending resize timeout
+		if (this.resizeTimeout) {
+			clearTimeout(this.resizeTimeout)
+			this.resizeTimeout = null
+		}
 		this.resizeObserver?.disconnect()
 	}
 

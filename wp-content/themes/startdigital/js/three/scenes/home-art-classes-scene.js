@@ -1,5 +1,3 @@
-import * as THREE from 'three'
-import gsap from 'gsap'
 import BaseScene from '../base-scene'
 import TrackedPlane from '../utils/tracked-plane'
 import WhiteNoiseMaterial from '../materials/white-noise-material'
@@ -14,7 +12,7 @@ class HomeArtClassesScene extends BaseScene {
 	}
 
 	createObjects() {
-		this.heroPlane = new TrackedPlane(
+		this.artclassPlane = new TrackedPlane(
 			this.scene,
 			this.camera,
 			this.heroContainer,
@@ -23,8 +21,13 @@ class HomeArtClassesScene extends BaseScene {
 				material: this.whiteNoiseMaterial.getMaterial(),
 			}
 		)
-		const quadSize = this.heroPlane.getQuadSize()
+		const quadSize = this.artclassPlane.getQuadSize()
 		this.whiteNoiseMaterial.setQuadSize(quadSize.x, quadSize.y)
+	}
+
+	onResize(width, height) {
+		super.onResize(width, height)
+		this.artclassPlane.updatePlane()
 	}
 
 	animate(deltaTime) {

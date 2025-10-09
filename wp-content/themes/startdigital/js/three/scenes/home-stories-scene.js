@@ -99,6 +99,12 @@ class HomeStoriesScene extends BaseScene {
 			this.imageMaterials[i].updateSpeed(this.speed)
 		})
 	}
+
+	onResize(width, height) {
+		super.onResize(width, height)
+		this.trackedPlanes.forEach((plane) => plane.updatePlane())
+	}
+
 	animate(deltaTime) {
 		this.time += deltaTime
 

@@ -83,6 +83,11 @@ class HomeOnNowScene extends BaseScene {
 		)
 	}
 
+	onResize(width, height) {
+		super.onResize(width, height)
+		this.trackedPlanes.forEach((plane) => plane.updatePlane())
+	}
+
 	animate(deltaTime) {
 		this.time += deltaTime
 

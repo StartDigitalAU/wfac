@@ -4,8 +4,8 @@
 	<div class="aspect-[4/5] w-full relative p-4 2xl:p-6 rounded-2xl group-hover:rounded-3xl group-hover:2xl:rounded-[32px] overflow-hidden duration-500 ease-in-out flex flex-col gap-8">
 		<img src="{{ get_image(class_category.image).src }}" alt="{{ class_category.image.alt }}" class="absolute inset-0 w-full h-full object-cover group-hover:blur-xl duration-500 ease-in-out"/>
 		<div class="absolute inset-0 bg-wfac-dark-red/75 duration-500 ease-in-out opacity-0 group-hover:opacity-100"></div>
-		<div class=" max-lg:hidden flex flex-row flex-wrap gap-2 relative z-20 flex-grow items-center justify-center">
-			<div class="flex flex-row flex-wrap gap-2 relative z-20 items-center">
+		<div class=" flex flex-row flex-wrap gap-2 relative z-20 flex-grow items-center justify-center">
+			<div class="flex flex-row max-lg:hidden flex-wrap gap-2 relative z-20 items-center">
 				{% for term in terms %}
 					{% set term = get_term(term.term_id) %}
 					{% set total_count = total_count + term.count %}
