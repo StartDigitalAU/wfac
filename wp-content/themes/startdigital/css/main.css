@@ -1,6 +1,8 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+@import './tomselect.css';
+@import './datepicker.css';
 @import './typography.css';
 @import './animations.css';
 @import './header.css';
@@ -12,11 +14,6 @@
 @layer components {
 	.container {
 		@apply max-w-full w-full px-4 md:px-8 mx-auto;
-	}
-}
-
-header {
-	&.header-scrolling {
 	}
 }
 

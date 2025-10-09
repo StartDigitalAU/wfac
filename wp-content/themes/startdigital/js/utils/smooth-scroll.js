@@ -7,6 +7,7 @@ export default function initSmoothScrolling() {
 		lerp: 0.15,
 		autoRaf: true,
 		syncTouch: true,
+		allowNestedScroll: true,
 	})
 }
 

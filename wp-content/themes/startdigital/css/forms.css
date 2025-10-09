@@ -1,1 +1,144 @@
-/* Form styles go here */
+.select {
+	@apply is-h4;
+
+	.ts-control {
+		@apply !bg-transparent text-white is-h4 border-none p-0 flex flex-row items-center gap-2;
+
+		input {
+			@apply !bg-transparent text-white is-h4 border-none p-0 flex flex-row items-center gap-2;
+		}
+		.item {
+			@apply relative pr-6;
+			&::after {
+				@apply content-[''] size-3.5 bg-contain bg-center bg-no-repeat opacity-50 absolute top-1/2 -translate-y-[65%] right-0 duration-300 ease-fancy;
+				background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 17 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.4541 1.60245L8.3764 8.52475L15.2987 1.60245' stroke='%23F0F0EE' stroke-width='2.76892' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+			}
+		}
+	}
+
+	&.dropdown-active {
+		.item::after {
+			@apply -rotate-180 opacity-100;
+		}
+	}
+
+	.ts-dropdown {
+		@apply bg-wfac-cream !text-wfac-dark-red !rounded-md border-none overflow-hidden !text-lg;
+
+		.option,
+		.no-results {
+			@apply py-1 pt-2 px-3;
+		}
+
+		.active {
+			@apply !text-wfac-white !bg-wfac-accent-red;
+		}
+	}
+
+	&:hover {
+		.item {
+			&::after {
+				@apply opacity-100;
+			}
+		}
+	}
+}
+
+.date-field {
+	@apply is-h4;
+}
+
+.air-datepicker {
+	/* Custom color variables */
+	--date-picker-bg: #f0f0ee;
+	--date-picker-hover: #fd614a;
+	--date-picker-text: #3c0c0b;
+
+	/* Air Datepicker variables */
+	--adp-background-color: var(--date-picker-bg);
+	--adp-background-color-hover: var(--date-picker-hover);
+	--adp-background-color-active: var(--date-picker-hover);
+	--adp-color: var(--date-picker-text);
+	--adp-border-color: transparent;
+	--adp-border-radius: 0.375rem;
+	--adp-font-family: inherit;
+	--adp-nav-arrow-color: var(--date-picker-text);
+	--adp-nav-color-secondary: var(--date-picker-text);
+	--adp-color-other-month: #3c0c0b47;
+	--adp-color-current-date: var(--date-picker-hover);
+
+	@apply !bg-wfac-cream text-wfac-dark-red rounded-md border-none overflow-hidden font-heading text-base *:leading-[0];
+}
+
+.air-datepicker-nav {
+	@apply border-none;
+}
+
+.air-datepicker-nav--action:hover {
+	@apply !bg-wfac-accent-red;
+
+	path {
+		@apply !stroke-wfac-white;
+	}
+}
+
+.air-datepicker-nav--title:hover {
+	@apply !bg-wfac-accent-red *:!text-wfac-white !text-wfac-white;
+}
+
+.air-datepicker-body--day-name {
+	@apply text-wfac-dark-red opacity-70;
+}
+
+.air-datepicker-cell {
+	@apply text-wfac-dark-red;
+
+	&.-focus- {
+		@apply !bg-wfac-accent-red;
+	}
+
+	&.-selected- {
+		@apply !bg-wfac-accent-red !text-wfac-white;
+	}
+
+	&.-selected-.-focus- {
+		@apply !bg-wfac-accent-red !text-wfac-white;
+	}
+
+	&.-in-range- {
+		@apply !bg-wfac-accent-red/20 !text-wfac-dark-red;
+	}
+
+	&.-range-from-,
+	&.-range-to- {
+		@apply !bg-wfac-accent-red !text-wfac-white border-none;
+	}
+
+	&:hover {
+		@apply !bg-wfac-accent-red !text-wfac-white;
+	}
+}
+
+.air-datepicker-body--cells.-days- {
+	@apply py-1 px-3;
+}
+
+.air-datepicker--pointer {
+	@apply hidden;
+}
+
+.air-datepicker-buttons {
+	@apply border-none pt-2;
+}
+
+.air-datepicker-button {
+	@apply !text-wfac-dark-red py-1 pt-2 px-3;
+
+	&:hover {
+		@apply !bg-wfac-accent-red !text-wfac-white;
+	}
+}
+
+.-current- {
+	@apply !bg-wfac-white;
+}

@@ -1,5 +1,3 @@
-import initRemoveLinks from './utils/removeLink'
-import initHeaderOnScroll from './utils/headerOnScroll'
 import initThree from './three/three-bootstrap'
 import initSmoothScrolling from './utils/smooth-scroll'
 import initMorphSVG from './components/svg-morph'
@@ -8,16 +6,20 @@ import initButtonAnimation from './components/button'
 import initHeaderHoverAnimation from './components/header/header-hover'
 import MenuStateManager from './components/header/menu-state-manager'
 import initMenuAccordions from './components/header/header-accordion'
+import initSelectors from './utils/selectors'
+import initDatePickers from './utils/date-pickers'
+import initProgramMenu from './components/program/program-menu'
 
 document.addEventListener('DOMContentLoaded', () => {
 	initSmoothScrolling()
+	initDatePickers()
+	initSelectors()
 	initHeaderHoverAnimation()
 	initMenuAccordions()
 	new MenuStateManager()
-	initRemoveLinks()
-	initHeaderOnScroll()
 	initButtonAnimation()
 	initMouseFollowers()
+	initProgramMenu()
 	initThree()
 	initMorphSVG()
 })

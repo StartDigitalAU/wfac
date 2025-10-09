@@ -1,1 +1,64 @@
-.f
+<aside data-program-menu class="fixed translate-x-[calc(100%+100px)] will-change-transform z-[60] top-0 right-0 bg-wfac-dark-red p-12 pt-20 flex flex-col gap-8 w-[50vw] min-w-[600px] h-lvh" role="complementary" aria-labelledby="filter-heading">
+	<button data-program-button aria-label="Close filter menu" class="absolute top-6 right-6 rounded-full bg-wfac-white text-wfac-dark-red duration-400 ease-fancy hover:bg-wfac-accent-red hover:scale-90 hover:text-wfac-white p-4 flex justify-center items-center self-end">
+		{% include "icons/cross.twig" with { class: 'size-4 ' } %}
+	</button>
+	<form class="flex flex-col gap-8 flex-grow" role="search" aria-label="Filter {{ post.title }}">
+		<h2 id="filter-heading" class="text-wfac-accent-red">Filter<br>
+			{{ post.title }}
+		</h2>
+
+		{% include 'partials/program/program-select-field.twig' with {
+            label: 'Type',
+            name: 'type',
+            id: 'type',
+            placeholder: 'All',
+            options: [
+            { value: 'all', label: 'All', default: true },
+            { value: 'one-day', label: 'One Day' },
+            { value: 'weekend', label: 'Weekend' },
+            { value: 'multi-week', label: 'Multi-week' }
+            ]
+        } %}
+		{% include 'partials/program/program-date-picker.twig' with {
+            label: 'Date',
+            name: 'date',
+            id: 'date',
+            placeholder: 'All',
+        } %}
+		{% include 'partials/program/program-select-field.twig' with {
+            label: 'Audience',
+            name: 'audience',
+            id: 'audience',
+            placeholder: 'All',
+            options: [
+            { value: 'all', label: 'All', default: true },
+            { value: 'for-kids', label: 'For Kids' },
+            { value: 'for-adults', label: 'For Adults' }
+            ]
+        } %}
+
+		{% include 'partials/program/program-select-field.twig' with {
+            label: 'Disciplines',
+            name: 'disciplines',
+            id: 'disciplines',
+            placeholder: 'All',
+            options: [
+            { value: 'all', label: 'All', default: true }
+            ]
+        } %}
+
+		{% include 'partials/program/program-select-field.twig' with {
+            label: 'Tutor',
+            name: 'tutor',
+            id: 'tutor',
+            placeholder: 'All',
+            options: get_tutors_filtering()
+        } %}
+		<div class="flex flex-col justify-end flex-grow relative z-0">
+			{% include 'partials/program/program-submit-button.twig' %}
+		</div>
+	</form>
+	<svg class="program-svg absolute w-[100px] h-full top-0 -left-[99px] fill-wfac-dark-red stroke-none">
+		<path/>
+	</svg>
+</aside>

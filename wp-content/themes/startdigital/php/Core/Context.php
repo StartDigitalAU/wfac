@@ -38,41 +38,23 @@ class Context
 
     public function add_timber_functions($functions)
     {
-        $functions['timber_set_product'] = array(
-            'callable' => array($this, 'timber_set_product')
-        );
+        $method_names = [
+            'timber_set_product',
+            'juggle_taxonomies',
+            'juggle_dates',
+            'get_news_posts',
+            'get_opening_hours',
+            'get_exhibitions',
+            'get_art_classes',
+            'get_events',
+            'get_child_pages',
+            'get_tutors_filtering',
+            'get_whats_on',
+        ];
 
-        $functions['juggle_taxonomies'] = array(
-            'callable' => array($this, 'juggle_taxonomies')
-        );
-
-        $functions['juggle_dates'] = array(
-            'callable' => array($this, 'juggle_dates')
-        );
-
-        $functions['get_news_posts'] = array(
-            'callable' => array($this, 'get_news_posts')
-        );
-
-        $functions['get_opening_hours'] = array(
-            'callable' => array($this, 'get_opening_hours')
-        );
-
-        $functions['get_exhibitions'] = array(
-            'callable' => array($this, 'get_exhibitions')
-        );
-
-        $functions['get_art_classes'] = array(
-            'callable' => array($this, 'get_art_classes')
-        );
-
-        $functions['get_events'] = array(
-            'callable' => array($this, 'get_events')
-        );
-
-        $functions['get_child_pages'] = array(
-            'callable' => array($this, 'get_child_pages')
-        );
+        foreach ($method_names as $method) {
+            $functions[$method] = ['callable' => [$this, $method]];
+        }
 
         return $functions;
     }
@@ -212,6 +194,39 @@ class Context
             'orderby' => 'menu_order',
             'order' => 'ASC',
             'posts_per_page' => $limit,
+        );
+
+        return Timber::get_posts($args);
+    }
+
+    public function get_tutors_filtering()
+    {
+        global $wpdb;
+
+        $tutors = $wpdb->get_results(
+            "SELECT post_title as label, post_name as value 
+             FROM {$wpdb->posts} 
+             WHERE post_type = 'tutor' 
+             AND post_status = 'publish'
+             ORDER BY post_title ASC"
+        );
+
+        array_unshift($tutors, (object)[
+            'value' => 'all',
+            'label' => 'All',
+            'default' => true
+        ]);
+
+        return $tutors;
+    }
+
+    public function get_whats_on($limit)
+    {
+        $args = array(
+            'post_type' => array('whatson', 'product'),
+            'posts_per_page' => $limit,
+            'orderby' => 'date',
+            'order' => 'DESC',
         );
 
         return Timber::get_posts($args);

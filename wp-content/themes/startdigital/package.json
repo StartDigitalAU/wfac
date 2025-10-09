@@ -11,6 +11,7 @@
 		"browser-sync": "cross-env NODE_ENV=development browser-sync start --proxy \"wfac.test\" --host=\"wfac.test\" --no-inject-changes --files=\"./\""
 	},
 	"dependencies": {
+		"air-datepicker": "^3.6.0",
 		"autoprefixer": "^10.4.17",
 		"browser-sync": "^2.29.3",
 		"concurrently": "^7.6.0",
@@ -26,7 +27,8 @@
 		"postcss-nested": "^6.0.1",
 		"smooothy": "^0.0.26",
 		"swiper": "^10.3.1",
-		"three": "^0.180.0"
+		"three": "^0.180.0",
+		"tom-select": "^2.4.3"
 	},
 	"devDependencies": {
 		"@tailwindcss/typography": "^0.5.10",
