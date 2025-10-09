@@ -1,0 +1,34 @@
+{% set nav_items = get_child_pages('program') %}
+{% set display_modes = ['grid', 'list', 'feed'] %}
+{% set current_display = function('get_query_var', 'display') ?: 'grid' %}
+
+<section class="text-wfac-dark-red pt-36">
+	<div class="container flex flex-col gap-8">
+		<div class="flex flex-row justify-between items-center gap-4">
+			<nav>
+				<ul class="flex flex-row items-center gap-6">
+					{% for child_page in nav_items %}
+						<li>
+							{% if post.link is same as child_page.link %}
+								<span class="is-h6 opacity-100 cursor-default">{{ child_page.title }}</span>
+							{% else %}
+								<a class="is-h6 duration-400 ease-fancy hover:opacity-100 opacity-50" href="{{ child_page.link }}?display={{ current_display }}">{{ child_page.title }}</a>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			</nav>
+			{% include "partials/program/program-filter-button.twig" %}
+		</div>
+		<div class="flex flex-row items-end justify-between gap-8">
+			<h1 class="is-display flex w-full">{{ post.title }}</h1>
+			<div class="flex flex-row gap-8 justify-end">
+				{% for mode in display_modes %}
+					<a href="{{ post.link }}?display={{ mode }}" class="is-h6 duration-400 ease-fancy hover:opacity-100 {{ current_display == mode ? 'opacity-100' : 'opacity-50' }}">
+						{{ mode }}
+					</a>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</section>

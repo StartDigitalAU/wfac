@@ -70,6 +70,9 @@ class Context
             'callable' => array($this, 'get_events')
         );
 
+        $functions['get_child_pages'] = array(
+            'callable' => array($this, 'get_child_pages')
+        );
 
         return $functions;
     }
@@ -190,6 +193,25 @@ class Context
                     'operator' => 'EXISTS'
                 )
             )
+        );
+
+        return Timber::get_posts($args);
+    }
+
+    public function get_child_pages(string $parent_page, int $limit = -1)
+    {
+        $parent = Timber::get_post_by('slug', $parent_page);
+
+        if (!$parent) {
+            return null;
+        }
+
+        $args = array(
+            'post_type' => 'page',
+            'post_parent' => $parent->ID,
+            'orderby' => 'menu_order',
+            'order' => 'ASC',
+            'posts_per_page' => $limit,
         );
 
         return Timber::get_posts($args);

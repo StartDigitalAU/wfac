@@ -1,5 +1,11 @@
 module.exports = {
-	content: ['./*/*.php', './*.php', './templates/**/*.twig', './*/*/.js'],
+	content: [
+		'./*/*.php',
+		'./*.php',
+		'./templates/**/*.twig',
+		'./views/**/*.twig',
+		'./*/*/.js',
+	],
 	theme: {
 		extend: {
 			aspectRatio: {

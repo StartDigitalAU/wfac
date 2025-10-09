@@ -62,48 +62,6 @@ class ConfigurationService
     }
 
     /**
-     * Load global variables for theme
-     */
-    public function loadGlobals(): void
-    {
-        global $post;
-
-        if (is_admin()) {
-            return;
-        }
-
-        if (!isset($GLOBALS['site_url'])) {
-            $GLOBALS['site_url'] = get_bloginfo('url');
-        }
-
-        if (!isset($GLOBALS['template_url'])) {
-            $GLOBALS['template_url'] = get_bloginfo('template_url');
-        }
-
-        if (!isset($GLOBALS['template_path'])) {
-            $GLOBALS['template_path'] = get_template_directory();
-        }
-
-        // Set ACF plugin fields
-        if (!isset($GLOBALS['theme_options'])) {
-            $GLOBALS['theme_options'] = function_exists('get_fields') ? get_fields('options') : array();
-        }
-
-        if (!isset($GLOBALS['page_fields']) && !empty($post)) {
-            $GLOBALS['page_fields'] = function_exists('get_fields') ? get_fields($post->ID) : array();
-        }
-
-        // Default images
-        if (!isset($GLOBALS['default_img'])) {
-            $GLOBALS['default_img'] = $GLOBALS['template_url'] . '/img/ui/placeholder.jpg';
-        }
-
-        if (!isset($GLOBALS['default_img_small'])) {
-            $GLOBALS['default_img_small'] = $GLOBALS['template_url'] . '/img/ui/placeholder-50x50.png';
-        }
-    }
-
-    /**
      * Disable admin bar for non-admin users
      *
      * @return bool
@@ -121,6 +79,12 @@ class ConfigurationService
     public function disableGravityFormsCSS(): bool
     {
         return true;
+    }
+
+    public function addQueryVars($vars)
+    {
+        $vars[] = 'display';
+        return $vars;
     }
 
 

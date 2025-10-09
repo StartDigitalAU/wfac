@@ -6,10 +6,11 @@ export default function initMouseFollowers() {
 
 function whatsOnMouseFollower() {
 	const mousefollowerElement = document.querySelector('[data-whats-on-mouse]')
-	const mousefollowerInner = mousefollowerElement.querySelector(':scope > div')
-	const mousefollowerText = mousefollowerInner.querySelector('span')
 
 	if (!mousefollowerElement) return
+
+	const mousefollowerInner = mousefollowerElement.querySelector(':scope > div')
+	const mousefollowerText = mousefollowerInner.querySelector('span')
 
 	gsap.set(mousefollowerElement, { xPercent: -50, yPercent: -100, scale: 0 })
 

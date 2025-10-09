@@ -1,0 +1,29 @@
+<button class="button button-animation group dark-red border border-wfac-dark-red px-4">
+	<div class="relative z-20 flex flex-row items-center gap-2 overflow-hidden">
+		<div class="pt-1 group-hover:-translate-y-full duration-500 ease-in-out">
+			<span class=" group-hover:text-wfac-dark-red duration-300 delay-150 ease-in-out">
+				Filter
+			</span>
+			<span class="absolute top-[calc(100%+4px)] left-0 group-hover:text-wfac-dark-red duration-300 delay-150 ease-in-out">
+				Filter
+			</span>
+		</div>
+		{% include "icons/filter.twig" with { class: 'size-5 group-hover:text-wfac-dark-red duration-300 delay-150 ease-in-out' } %}
+	</div>
+
+	<svg class="absolute inset-0 w-0 h-0">
+		<defs>
+			<filter id="goo-effect">
+				<feGaussianBlur in="SourceGraphic" stddeviation="10" result="blur"/>
+				<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo"/>
+				<feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+			</filter>
+		</defs>
+	</svg>
+	<div class="absolute inset-0 h-full w-full" style="filter: url(#goo-effect);">
+		<div class="absolute inset-0 h-full w-full rounded-full overflow-hidden">
+			<div class="button__bg"></div>
+		</div>
+		<div class="button__circle absolute inset-0"></div>
+	</div>
+</button>

@@ -36,11 +36,11 @@ class GeneralHookProvider extends HookProvider
         $this->addFilter('wp_mail_from', [$this->configurationService, 'customMailFrom']);
         $this->addFilter('wp_mail_from_name', [$this->configurationService, 'customMailFromName']);
 
-        // Load global variables
-        $this->addAction('template_redirect', [$this->configurationService, 'loadGlobals']);
-
         // Disable Gravity Forms theme CSS
         $this->addFilter('gform_disable_form_theme_css', [$this->configurationService, 'disableGravityFormsCSS']);
+
+        //Add display to the query variables
+        $this->addFilter('query_vars', [$this->configurationService, 'addQueryVars']);
 
         // Load images externally because the media library is HUGE
         $this->addFilter('upload_dir', [$this->configurationService, 'loadImagesExternally']);

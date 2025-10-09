@@ -63,6 +63,10 @@ h6,
 	@apply text-[18px];
 }
 
+.is-display {
+	@apply text-[128px];
+}
+
 /* List styles inside WYSIWYG editors */
 .block-content {
 	@apply flex flex-col gap-4 md:gap-6;

@@ -5,7 +5,7 @@
 	<html
 	class="no-js no-svg" {{ site.language_attributes }}> <!-- <![endif] -->
 	{% block html_head_container %}
-		{% include 'html-header.twig' %}
+		{% include 'includes/html-header.twig' %}
 	{% endblock %}
 
 	<body class="{{ body_class }} min-h-screen" data-template="base.twig">
@@ -25,7 +25,7 @@
 			{% endblock %}
 		</main>
 		{% block footer %}
-			{% include 'footer.twig' %}
+			{% include 'includes/footer.twig' %}
 
 			{{ function('wp_footer') }}
 		{% endblock %}
