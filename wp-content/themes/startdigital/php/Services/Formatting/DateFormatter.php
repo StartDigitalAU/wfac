@@ -43,20 +43,26 @@ class DateFormatter
 
     private function formatTime($time)
     {
-        $time_obj = \DateTime::createFromFormat('H:i:s', $time) ?: \DateTime::createFromFormat('H:i', $time);
+        // Try multiple format patterns
+        $time_obj = \DateTime::createFromFormat('H:i:s', $time)
+            ?: \DateTime::createFromFormat('H:i', $time)
+            ?: \DateTime::createFromFormat('h:i a', $time)
+            ?: \DateTime::createFromFormat('h:i A', $time);
 
         if (!$time_obj) {
             return $time;
         }
 
-        $formatted = $time_obj->format('g:i');
+        $hour = (int)$time_obj->format('g');
+        $minute = (int)$time_obj->format('i');
+        $ampm = $time_obj->format('a');
 
-        // Remove :00 for whole hours
-        if (substr($formatted, -3) === ':00') {
-            $formatted = substr($formatted, 0, -3);
+        // Format without :00 for whole hours
+        if ($minute === 0) {
+            return $hour . $ampm;
         }
 
-        return $formatted . $time_obj->format('a');
+        return $hour . ':' . str_pad($minute, 2, '0', STR_PAD_LEFT) . $ampm;
     }
 
     private function getRelativeDay($date, $now)

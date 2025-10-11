@@ -3,7 +3,9 @@
 	{% set current_display = function('get_query_var', 'display') ?: 'grid' %}
 
 	{% include "partials/mouse-follower.twig" %}
-	<div id="program-archive" class="bg-wfac-cream">
+	{# This is the WebGL scene container, this will stay fixed to the screen #}
+	<div id="program-archive" class="fixed top-0 left-0 w-full h-lvh pointer-events-none -z-10"></div>
+	<div class="bg-wfac-cream">
 		{% include "partials/program/program-nav.twig" %}
 		{% if current_display == 'feed' %}
 			{% include "partials/program/program-feed.twig" %}

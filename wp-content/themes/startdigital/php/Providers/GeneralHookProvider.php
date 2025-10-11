@@ -12,9 +12,9 @@ class GeneralHookProvider extends HookProvider
 {
     private ConfigurationService $configurationService;
 
-    public function __construct(ConfigurationService $configurationService)
+    public function __construct()
     {
-        $this->configurationService = $configurationService;
+        $this->configurationService = new ConfigurationService();
     }
 
     /**

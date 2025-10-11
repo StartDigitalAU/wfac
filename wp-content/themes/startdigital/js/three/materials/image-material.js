@@ -34,7 +34,7 @@ class ImageMaterial {
 			${uvCoverVert}
 
 			vec3 deformationCurve(vec3 position, vec2 uv) {
-				float limitedSpeed = clamp(uSpeed* 0.25, -0.45, 0.45); // Clamp between -2 and 2
+				float limitedSpeed = clamp(uSpeed * 0.25, -0.45, 0.45); // Clamp between -2 and 2
 				
 				position.x = position.x - sin(uv.y * PI) * -1.0 * limitedSpeed;
 				position.z = position.z - 1.0 * abs(limitedSpeed);

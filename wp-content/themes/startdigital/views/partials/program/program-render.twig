@@ -1,0 +1,9 @@
+{% for program_post in program_posts %}
+	{% if display == 'list' %}
+		{% include "partials/teases/program-list-tease.twig" with { course: program_post, class: 'dark' } %}
+	{% elseif display == 'feed' %}
+		{% include "partials/teases/program-feed-tease.twig" with { course: program_post, class: 'dark' } %}
+	{% else %}
+		{% include "partials/teases/courses-tease.twig" with { course: program_post, class: 'dark' } %}
+	{% endif %}
+{% endfor %}

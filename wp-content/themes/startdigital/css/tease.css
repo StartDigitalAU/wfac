@@ -36,6 +36,10 @@
 	.image-container {
 		@apply aspect-[0.9] xl:aspect-3/4;
 	}
+
+	h3 {
+		@apply is-h4;
+	}
 }
 
 .course-tease.dark {

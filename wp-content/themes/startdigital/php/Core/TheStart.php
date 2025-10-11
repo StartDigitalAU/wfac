@@ -9,15 +9,12 @@ use TheStart\Core\ThemeSupport;
 use TheStart\PostTypes\PostTypeManager;
 use TheStart\Taxonomies\TaxonomyManager;
 use TheStart\Features\WooCommerce\ProductManager;
-use TheStart\Providers\HookProvider;
 use TheStart\Providers\GeneralHookProvider;
-use TheStart\Services\ConfigurationService;
+use TheStart\Providers\AjaxHookProvider;
 
 class TheStart extends Site
 {
-    /**
-     * @var HookProvider[]
-     */
+
     protected array $providers = [];
 
     public function __construct()
@@ -46,15 +43,12 @@ class TheStart extends Site
         }
     }
 
-    /**
-     * Get all provider instances
-     * 
-     * @return HookProvider[]
-     */
     private function getProviders(): array
     {
         return [
-            new GeneralHookProvider(new ConfigurationService()),
+            new GeneralHookProvider(),
+            new AjaxHookProvider()
+
         ];
     }
 }

@@ -20,6 +20,9 @@ export default function initProgramMenu() {
 			duration: 0.65,
 			ease: 'power3.inOut',
 		},
+		onComplete: () => {
+			gsap.set(formItems, { clearProps: 'all' })
+		},
 	})
 
 	const initialPath = `M100 0 L100 ${window.innerHeight} Q-100 ${
@@ -86,7 +89,9 @@ export default function initProgramMenu() {
 			button.contains(e.target)
 		)
 
-		if (!isClickInsideMenu && !isClickOnButton) {
+		const isClickOnDatepicker = e.target.closest('.air-datepicker')
+
+		if (!isClickInsideMenu && !isClickOnButton && !isClickOnDatepicker) {
 			closeMenu()
 		}
 	})

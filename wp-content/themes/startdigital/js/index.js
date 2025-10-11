@@ -9,6 +9,8 @@ import initMenuAccordions from './components/header/header-accordion'
 import initSelectors from './utils/selectors'
 import initDatePickers from './utils/date-pickers'
 import initProgramMenu from './components/program/program-menu'
+import initFeed from './components/program/feed'
+import ProgramLoader from './components/program/program-loader'
 
 document.addEventListener('DOMContentLoaded', () => {
 	initSmoothScrolling()
@@ -20,6 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	initButtonAnimation()
 	initMouseFollowers()
 	initProgramMenu()
+
+	const programLoader = new ProgramLoader()
+	initFeed(programLoader)
+
 	initThree()
 	initMorphSVG()
 })

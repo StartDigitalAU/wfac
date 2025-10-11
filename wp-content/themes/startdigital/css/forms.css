@@ -17,6 +17,7 @@
 	}
 
 	&.dropdown-active {
+		@apply z-[70];
 		.item::after {
 			@apply -rotate-180 opacity-100;
 		}

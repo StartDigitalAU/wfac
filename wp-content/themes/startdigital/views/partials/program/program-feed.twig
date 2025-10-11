@@ -1,0 +1,9 @@
+<section id="program-feed" class="min-h-lvh relative overflow-hidden !py-0">
+	<div data-mouse="Get Info" class="container flex flex-col justify-center items-center post-tease-container program-grid">
+		<div id="programs-container" class="max-w-[400px] w-full relative h-lvh overflow-hidden" data-display="feed" data-has-more="{{ pagination.has_more ? 'true' : 'false' }}">
+			{% for program_post in program_posts %}
+				{% include "partials/teases/program-feed-tease.twig" with { class: 'dark' } %}
+			{% endfor %}
+		</div>
+	</div>
+</section>

@@ -14,7 +14,7 @@ class ProgramPageController
     {
         $this->post = $post;
         $this->posts_to_show = get_field('posts_to_show', $post->ID);
-        $this->limit = get_field('posts_limit', $post->ID) ?: 14;
+        $this->limit = get_field('posts_limit', $post->ID) ?: 12;
     }
 
     public function get_context()
@@ -22,6 +22,7 @@ class ProgramPageController
         $context = Timber::context();
         $context['post'] = Timber::get_post($this->post->ID);
         $context['program_posts'] = $this->get_program_posts();
+        $context['pagination'] = $this->get_pagination();
 
         return $context;
     }
@@ -33,6 +34,7 @@ class ProgramPageController
             'posts_per_page' => $this->limit,
             'orderby' => 'date',
             'order' => 'DESC',
+            'paged' => 1, // Initial load is page 1
         );
 
         $tax_query = $this->get_tax_query();
@@ -52,6 +54,28 @@ class ProgramPageController
         }
 
         return $posts;
+    }
+
+    private function get_pagination()
+    {
+        $args = array(
+            'post_type' => $this->get_post_types(),
+            'posts_per_page' => $this->limit,
+        );
+
+        $tax_query = $this->get_tax_query();
+
+        if (!empty($tax_query)) {
+            $args['tax_query'] = $tax_query;
+        }
+
+        $query = new \WP_Query($args);
+
+        return [
+            'current' => 1,
+            'has_more' => 1 < $query->max_num_pages,
+            'total' => $query->max_num_pages
+        ];
     }
 
     private function enhance_post_data($post)

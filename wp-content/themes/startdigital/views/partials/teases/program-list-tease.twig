@@ -1,37 +1,40 @@
 {% set terms = juggle_taxonomies(course.ID) %}
 {% set date = juggle_dates(course.ID) %}
 {% set start_date = function('get_field', 'start_date', course.ID) %}
-{% set cost = course.meta('cost') ?: '$' ~ timber_set_product(course).get_price() %}
+{% set product = timber_set_product(course) %}
+{% set cost = course.meta('cost') ?: (product and product.get_price is defined ? '$' ~ product.get_price() : '') %}
 
-<article class="post-tease relative grid grid-cols-2 items-center gap-12 group py-6 border-b border-wfac-dark-red {{ class }}">
-	<a href="{{ function('get_permalink', course.ID) }}" class="absolute inset-0 h-full w-full z-20"></a>
-	<div class="flex flex-row gap-12 items-center">
-		<div class="image-container relative overflow-hidden rounded-md max-w-[200px] w-full aspect-[16/10]">
-			<img src="{{ get_image(course.info_image ?: course.hero_image).src }}" alt="{{ course.course_title }}" class="absolute inset-0 w-full h-full object-cover"/>
+<div class="py-3 border-b border-wfac-dark-red {{ class }}">
+	<article class="post-tease relative grid grid-cols-2 items-center gap-12 group py-3 px-3 duration-400 ease-fancy hover:bg-wfac-white rounded-xl">
+		<a href="{{ function('get_permalink', course.ID) }}" class="absolute inset-0 h-full w-full z-20"></a>
+		<div class="flex flex-row gap-12 items-center">
+			<div class="image-container relative overflow-hidden rounded-md max-w-[200px] w-full aspect-[16/10]">
+				<img src="{{ get_image(course.info_image ?: course.hero_image ?: options.course_default_image).src('large') }}" alt="{{ course.course_title }}" class="absolute inset-0 w-full h-full object-cover"/>
+			</div>
+			<h3 class="is-h5 text-wfac-dark-red duration-400 ease-fancy group-hover:text-wfac-accent-red w-full max-w-[500px]">
+				{{ course.post_title }}
+			</h3>
 		</div>
-		<h3 class="is-h5 text-wfac-dark-red- duration-300 ease-in-out group-hover:text-wfac-accent-red w-full max-w-[500px]">
-			{{ course.post_title }}
-		</h3>
-	</div>
-	<div class="grid grid-cols-3 gap-12">
-		<div class="">
-			{% if terms[0] %}
-				<a href="{{ terms[0].link }}" class="term-link relative z-30 text-sm text-wfac-dark-red rounded-full py-2 px-3 bg-wfac-white hover:bg-wfac-accent-red hover:text-wfac-white duration-300 ease-in-out">
-					{{ terms[0].name }}
-				</a>
+		<div class="grid grid-cols-3 gap-12">
+			<div class="">
+				{% if terms[0] %}
+					<a href="{{ terms[0].link }}" class="term-link relative z-30 text-sm text-wfac-dark-red rounded-full py-2 px-3 bg-wfac-white hover:bg-wfac-accent-red group-hover:bg-wfac-dark-red group-hover:text-wfac-white hover:text-wfac-white duration-300 ease-in-out">
+						{{ terms[0].name }}
+					</a>
+				{% endif %}
+			</div>
+			<div class="">
+				{% if date %}
+					<span class="date text-sm text-wfac-dark-red font-medium">
+						<time datetime="{{ start_date }}">
+							{{ date }}
+						</time>
+					</span>
+				{% endif %}
+			</div>
+			{% if cost %}
+				<div class="w-full flex justify-end text-sm text-wfac-dark-red font-medium pr-4">{{ cost }}</div>
 			{% endif %}
 		</div>
-		<div class="">
-			{% if date %}
-				<span class="date text-sm text-wfac-dark-red font-medium">
-					<time datetime="{{ start_date }}">
-						{{ date }}
-					</time>
-				</span>
-			{% endif %}
-		</div>
-
-		<div class="w-full flex justify-end text-sm text-wfac-dark-red font-medium">{{ cost }}</div>
-	</div>
-
-</article>
+	</article>
+</div>

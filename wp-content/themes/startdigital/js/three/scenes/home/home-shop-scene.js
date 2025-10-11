@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import gsap from 'gsap'
 import BaseScene from '../../base-scene'
 import TrackedPlane from '../../utils/tracked-plane'
+import OptimisedImagePlane from '../../utils/optimised-image-plane'
 import WhiteNoiseMaterial from '../../materials/white-noise-material'
 import { LinkSlider } from '../../../components/sliders/LinkSlider'
 
@@ -25,6 +26,7 @@ class HomeShopScene extends BaseScene {
 	}
 
 	createObjects() {
+		// Keep TrackedPlane for hero with custom material
 		this.heroPlane = new TrackedPlane(
 			this.scene,
 			this.camera,
@@ -38,44 +40,48 @@ class HomeShopScene extends BaseScene {
 		this.whiteNoiseMaterial.setQuadSize(quadSize.x, quadSize.y)
 		this.whiteNoiseMaterial.setColor(new THREE.Vector3(0.306, 0.137, 0.133))
 
-		this.trackedPlanes = []
-		this.imageMaterials = []
+		// Use OptimisedImagePlane for images
+		this.imagePlanes = []
 
 		this.imageContainers.forEach((imageContainer) => {
-			const imagePlane = new TrackedPlane(
+			const imagePlane = new OptimisedImagePlane(
 				this.scene,
 				this.camera,
 				imageContainer,
-				this.container
+				this.container,
+				{
+					borderRadius: 16,
+					speed: 0,
+					progress: 0.3,
+				}
 			)
 
-			this.trackedPlanes.push(imagePlane)
-			this.imageMaterials.push(imagePlane.getImageMaterial())
+			this.imagePlanes.push(imagePlane)
 		})
 	}
 
 	createMouseListeners() {
 		this.articleContainers.forEach((articleContainer, index) => {
-			const imageMaterial = this.imageMaterials[index]
+			const imagePlane = this.imagePlanes[index]
 
 			articleContainer.addEventListener('mouseenter', () => {
-				this.updateImageProgress(imageMaterial, true)
+				this.updateImageProgress(imagePlane, true)
 			})
 
 			articleContainer.addEventListener('mouseleave', () => {
-				this.updateImageProgress(imageMaterial, false)
+				this.updateImageProgress(imagePlane, false)
 			})
 		})
 	}
 
-	updateImageProgress(imageMaterial, isHovered = false) {
-		const index = this.imageMaterials.indexOf(imageMaterial)
+	updateImageProgress(imagePlane, isHovered = false) {
+		const index = this.imagePlanes.indexOf(imagePlane)
 
 		if (this.hoverAnimations[index]) {
 			this.hoverAnimations[index].kill()
 		}
 
-		const currentProgress = imageMaterial.getMaterial().uniforms.uProgress.value
+		const currentProgress = imagePlane.getMaterial().uniforms.uProgress.value
 		const targetProgress = isHovered ? 0.8 : 0.3
 
 		this.hoverAnimations[index] = gsap.to(
@@ -85,7 +91,7 @@ class HomeShopScene extends BaseScene {
 				duration: 0.45,
 				ease: 'power2.out',
 				onUpdate: function () {
-					imageMaterial.updateProgress(this.targets()[0].value)
+					imagePlane.updateProgress(this.targets()[0].value)
 				},
 			}
 		)
@@ -106,27 +112,28 @@ class HomeShopScene extends BaseScene {
 	}
 
 	updatePlanes() {
-		if (!this.trackedPlanes || !this.imageMaterials) return
+		if (!this.imagePlanes) return
 
 		this.speed = this.linkSlider.getCurrentSpeed()
-		this.trackedPlanes.forEach((plane, i) => {
+		this.imagePlanes.forEach((plane) => {
 			plane.updatePlane()
-			this.imageMaterials[i].updateSpeed(this.speed)
+			plane.updateSpeed(this.speed)
 		})
 	}
 
 	onResize(width, height) {
 		super.onResize(width, height)
-		this.trackedPlanes.forEach((plane) => plane.updatePlane())
+		this.heroPlane.updatePlane()
+		this.imagePlanes.forEach((plane) => plane.updatePlane())
 	}
 
 	animate(deltaTime) {
 		this.time += deltaTime
 		this.whiteNoiseMaterial.updateTime(this.time)
 
-		this.imageMaterials.forEach((imageMaterial) => {
-			imageMaterial.updateTime(this.time)
-			imageMaterial.updateLerp()
+		this.imagePlanes.forEach((plane) => {
+			plane.updateTime(this.time)
+			plane.updateLerp()
 		})
 	}
 }

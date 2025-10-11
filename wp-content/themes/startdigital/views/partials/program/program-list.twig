@@ -1,5 +1,5 @@
 <section class="pt-0">
-	<div class="container flex flex-col">
+	<div id="programs-container" class="container flex flex-col" data-display="list" data-has-more="{{ pagination.has_more ? 'true' : 'false' }}">
 		{% for program_post in program_posts %}
 			{% include "partials/teases/program-list-tease.twig" with { course: program_post, class: 'dark' } %}
 		{% endfor %}

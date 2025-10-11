@@ -2,15 +2,15 @@
 {% set date = juggle_dates(course.ID) %}
 {% set start_date = function('get_field', 'start_date', course.ID) %}
 
-<article class="post-tease course-tease relative flex flex-col gap-6 group {{ class }}">
+<article class="post-tease course-tease relative flex flex-col gap-6 w-full group {{ class }}">
 	<a href="{{ function('get_permalink', course.ID) }}" class="absolute inset-0 h-full w-full z-20"></a>
 	<div class="image-container relative w-full overflow-hidden rounded-md">
-		<img src="{{ get_image(course.info_image ?: course.hero_image).src }}" alt="{{ course.course_title }}" class="absolute inset-0 w-full h-full object-cover"/>
+		<img src="{{ get_image(course.info_image ?: course.hero_image ?: options.course_default_image).src('large') }}" alt="{{ course.course_title }}" class="absolute inset-0 w-full h-full object-cover"/>
 	</div>
 	<div class="flex flex-col gap-5 w-[90%]">
 		<div class="flex flex-row items-center gap-2">
 			{% if terms[0] %}
-				<a href="{{ terms[0].link }}" class="term-link relative z-30 text-sm text-wfac-dark-red rounded-full py-1 px-2.5 bg-wfac-cream hover:bg-wfac-accent-red duration-300 ease-in-out">
+				<a href="{{ terms[0].link }}" class="w-fit shrink-0 term-link relative z-30 text-sm text-wfac-dark-red rounded-full py-1 px-2.5 bg-wfac-cream hover:bg-wfac-accent-red duration-300 ease-in-out">
 					{{ terms[0].name }}
 				</a>
 			{% endif %}
